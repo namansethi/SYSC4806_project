@@ -1,10 +1,20 @@
 package SpringJPA.Model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user_login")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
 
     private String username;
     private String password;
     private String email;
+
+
 
     public User() {
         this.username = "DEFAULT";
@@ -45,5 +55,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
