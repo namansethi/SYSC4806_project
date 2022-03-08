@@ -1,3 +1,5 @@
+package main.models;
+
 import java.time.LocalDateTime;
 
 public class Customer extends User {
