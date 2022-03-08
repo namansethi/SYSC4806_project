@@ -1,4 +1,4 @@
-package main.models;
+package SpringJPA.Model;
 
 import java.time.LocalDateTime;
 

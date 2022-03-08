@@ -1,4 +1,4 @@
-package sysc4806.project.webpage;
+package SpringJPA;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;

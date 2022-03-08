@@ -1,4 +1,4 @@
-package main.models;
+package SpringJPA.Model;
 
 public class Administrator extends User{
 
