@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div layout:fragment="navhome">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+    </div>
+    <div layout:fragment="navright">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="#">Pricing</a>
+            <a class="nav-item nav-link" href="#">Trial</a>
+            <a class="nav-item nav-link" href="/register">Register</a>
+            <a class="nav-item nav-link" href="/login">Sign In</a>
+        </div>
+    </div>
+    <div layout:fragment="content">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">AppX</h1>
+                <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>
+                    <a href="/trial" class="btn btn-primary my-2">Start a Free Trial</a>
+                    <a href="/pricing" class="btn btn-secondary my-2">Purchase</a>
+                </p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
