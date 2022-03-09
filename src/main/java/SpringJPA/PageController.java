@@ -20,7 +20,7 @@ public class PageController {
     public String register() { return "register"; }
 
     @GetMapping("/user")
-    public String user() { return "userView"; }
+    public String user() { return "userPage"; }
 
     @GetMapping("/test")
     public String test() { return "test"; }
