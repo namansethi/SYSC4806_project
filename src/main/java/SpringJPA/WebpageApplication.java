@@ -9,11 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class WebpageApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(WebpageApplication.class);
+
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebpageApplication.class, args);
@@ -25,9 +28,9 @@ public class WebpageApplication {
 		return (args) -> {
 			log.info("Logging started");
 
-			User user1 = new User("User1", "Password123", "user1@fake.mail");
-			User user2 = new User("User2", "123Password", "user2@fake.mail");
-			User user3 = new User("User3", "Pass123word", "user3@fake.mail");
+			User user1 = new User("User1", passwordEncoder.encode("Password123"), "user1@fake.mail");
+			User user2 = new User("User2", passwordEncoder.encode("123Password"), "user2@fake.mail");
+			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "user3@fake.mail");
 
 			repository.save(user1);
 			repository.save(user2);
