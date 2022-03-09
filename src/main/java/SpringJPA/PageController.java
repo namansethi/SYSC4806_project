@@ -13,9 +13,6 @@ public class PageController {
     @GetMapping("/login")
     public String login() { return "login"; }
 
-    @GetMapping("/trial")
-    public String trial() { return "trial"; }
-
     @GetMapping("/pricing")
     public String pricing() { return "pricing"; }
 
