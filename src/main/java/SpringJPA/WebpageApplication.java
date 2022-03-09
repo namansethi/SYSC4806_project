@@ -1,7 +1,6 @@
 package SpringJPA;
 
-import SpringJPA.Model.User;
-import SpringJPA.Model.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,28 +18,28 @@ public class WebpageApplication {
 	}
 
 
-//	@Bean
-//	public CommandLineRunner demo(UserRepository repository) {
-//		return (args) -> {
-//			log.info("Logging started");
+	@Bean
+	public CommandLineRunner demo(/*UserRepository repository*/) {
+		return (args) -> {
+			log.info("Logging started");
+
+//			User user1 = new User("User1", "Password123", "user1@fake.mail");
+//			User user2 = new User("User2", "123Password", "user2@fake.mail");
+//			User user3 = new User("User3", "Pass123word", "user3@fake.mail");
 //
-////			User user1 = new User("User1", "Password123", "user1@fake.mail");
-////			User user2 = new User("User2", "123Password", "user2@fake.mail");
-////			User user3 = new User("User3", "Pass123word", "user3@fake.mail");
-////
-////			repository.save(user1);
-////			repository.save(user2);
-////			repository.save(user3);
-////
-////			for (User user: repository.findAll()){
-////				log.info(user.toString());
-////			}
+//			repository.save(user1);
+//			repository.save(user2);
+//			repository.save(user3);
 //
-//
-//			log.info("Done base logs");
-//
-//		};
-//	}
+//			for (User user: repository.findAll()){
+//				log.info(user.toString());
+//			}
+
+
+			log.info("Done base logs");
+
+		};
+	}
 
 
 }
