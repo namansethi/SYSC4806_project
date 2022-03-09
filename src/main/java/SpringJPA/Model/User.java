@@ -1,7 +1,13 @@
 package SpringJPA.Model;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "user_login")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long userId;
     private String username;
     private String password;
     private String email;
@@ -45,5 +51,12 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
