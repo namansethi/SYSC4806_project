@@ -18,14 +18,16 @@ public class User {
         this.password = "DEFAULT";
     }
 
-    public User(String user, String pass) {
+    public User(String user, String pass, String role) {
         this.username = user;
         this.password = pass;
+        this.role = role;
     }
 
-    public User(String user, String pass, String mail) {
+    public User(String user, String pass, String role, String mail) {
         this.username = user;
         this.password = pass;
+        this.role = role;
         this.email = mail;
 
     }

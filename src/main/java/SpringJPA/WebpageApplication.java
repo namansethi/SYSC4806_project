@@ -28,9 +28,9 @@ public class WebpageApplication {
 		return (args) -> {
 			log.info("Logging started");
 
-			User user1 = new User("User1", passwordEncoder.encode("Password123"), "user1@fake.mail");
-			User user2 = new User("User2", passwordEncoder.encode("123Password"), "user2@fake.mail");
-			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "user3@fake.mail");
+			User user1 = new User("User1", passwordEncoder.encode("Password123"), "USER");
+			User user2 = new User("User2", passwordEncoder.encode("123Password"), "USER");
+			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "USER");
 
 			repository.save(user1);
 			repository.save(user2);

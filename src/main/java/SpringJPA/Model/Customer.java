@@ -25,8 +25,8 @@ public class Customer extends User {
         init();
     }
 
-    public Customer(String username, String password) {
-        super(username, password);
+    public Customer(String username, String password, String role) {
+        super(username, password, role);
         init();
     }
 
