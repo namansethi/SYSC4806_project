@@ -27,7 +27,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>SpringJPA.ServingWebContentApplication</mainClass>
+					<mainClass>SpringJPA.WebpageApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
