@@ -52,11 +52,15 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String toString(){
+        return "Id: " + getUserId() + "User: " + getUsername() + "Password: " + getPassword();
     }
 }
