@@ -13,9 +13,6 @@ public class PageController {
     @GetMapping("/login")
     public String login() { return "login"; }
 
-    @GetMapping("/trial")
-    public String trial() { return "trial"; }
-
     @GetMapping("/pricing")
     public String pricing() { return "pricing"; }
 
@@ -23,10 +20,13 @@ public class PageController {
     public String register() { return "register"; }
 
     @GetMapping("/user")
-    public String user() { return "userView"; }
+    public String user() { return "userPage"; }
 
     @GetMapping("/test")
     public String test() { return "test"; }
+
+    @GetMapping("/upgrade")
+    public String upgrade() { return "upgrade"; }
 
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
