@@ -28,6 +28,9 @@ public class PageController {
     @GetMapping("/test")
     public String test() { return "test"; }
 
+    @GetMapping("/upgrade")
+    public String upgrade() { return "upgrade"; }
+
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
         ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
