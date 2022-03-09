@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String role;
 
     public User() {
         this.username = "DEFAULT";
@@ -62,5 +63,9 @@ public class User {
 
     public String toString(){
         return "Id: " + getUserId() + "User: " + getUsername() + "Password: " + getPassword();
+    }
+
+    public String getRole() {
+        return role;
     }
 }
