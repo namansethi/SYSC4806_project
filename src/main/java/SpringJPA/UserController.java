@@ -18,14 +18,26 @@ public class UserController {
         return userRepository.findByUserId(id);
     }
 
+    @GetMapping("/user/all")
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @GetMapping("/user/username")
+    public List<User> getByUser(@RequestParam(value = "username") String user) {
+        return userRepository.findByUsername(user);
+    }
+
     @PostMapping("/user/json")
     public User create(@RequestBody User user) {
         return userRepository.save(user);
     }
 
-    //@DeleteMapping("/user?={id}")
-    //public void delete(@PathVariable Long id) {
-    //    userRepository.deleteById(id);
-    //}
+
+
+    @DeleteMapping("/user/json")
+    public void delete(@RequestParam(value = "id") Long id) {
+        userRepository.deleteById(id);
+    }
 
 }
