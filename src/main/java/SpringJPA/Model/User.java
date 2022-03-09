@@ -11,20 +11,23 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String role;
 
     public User() {
         this.username = "DEFAULT";
         this.password = "DEFAULT";
     }
 
-    public User(String user, String pass) {
+    public User(String user, String pass, String role) {
         this.username = user;
         this.password = pass;
+        this.role = role;
     }
 
-    public User(String user, String pass, String mail) {
+    public User(String user, String pass, String role, String mail) {
         this.username = user;
         this.password = pass;
+        this.role = role;
         this.email = mail;
 
     }
@@ -62,5 +65,9 @@ public class User {
 
     public String toString(){
         return "Id: " + getUserId() + "User: " + getUsername() + "Password: " + getPassword();
+    }
+
+    public String getRole() {
+        return role;
     }
 }

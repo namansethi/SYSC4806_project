@@ -6,8 +6,8 @@ public class Administrator extends User{
         super();
     }
 
-    public Administrator(String username, String password) {
-        super(username, password);
+    public Administrator(String username, String password, String role) {
+        super(username, password, role);
     }
 
     public void setConstraints(Customer customer, Constraint constraint) {
