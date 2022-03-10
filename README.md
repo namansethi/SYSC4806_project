@@ -16,7 +16,7 @@ Our group members are:
 - Lazar Milojevic
 - Robert Desai
 
-##Project Devlopment Details
+## Project Devlopment Details
 This project uses a kanban board that can be found in the project tab of this GitHub repo.
 The issues that members are currently working on can be found in the issues tab.
 Also found in the issues tab is the weekly scrum issue, where members add comments with their progress/goals for the week
@@ -25,11 +25,11 @@ This project uses some automated CI/CD features.
 CircleCI is used for CI (https://app.circleci.com/pipelines/github/namansethi/SYSC4806_project?branch=main&filter=all)
 Heroku is used for the CD (https://sysc4806-project-group8.herokuapp.com/)
 
-##Project Technologies
+## Project Technologies
 This project is a maven project. The pom.xml file is provided for managing the dependencies, jar generation, etc.
 This project uses Java Spring(for the backend) and HTML/CSS (for the frontend).
 
-##Project Structure
+## Project Structure
 Currently, The general structure of the project is as follows.
 
     .circleci
