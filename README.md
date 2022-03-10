@@ -22,7 +22,7 @@ The issues that members are currently working on can be found in the issues tab.
 Also found in the issues tab is the weekly scrum issue, where members add comments with their progress/goals for the week
 
 This project uses some automated CI/CD features.
-CircleCI is used for CI (https://app.circleci.com/pipelines/github/namansethi/SYSC4806_project?branch=main&filter=all)
+CircleCI is used for CI (https://app.circleci.com/pipelines/github/namansethi/SYSC4806_project?branch=main&filter=all).
 Heroku is used for the CD (https://sysc4806-project-group8.herokuapp.com/)
 
 ## Project Technologies
