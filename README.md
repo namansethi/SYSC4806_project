@@ -38,18 +38,18 @@ Currently, The general structure of the project is as follows.
         main
             SpringJPA
                 Model
-                    Administrator.java
-                    Constraint.java
-                    Customer.java
-                    User.java
-                    UserRepository.java
-                CredentialService.java
-                MvcConfig.java
-                PageController.java
-                UserController.java
-                UserCredentials.java
-                WebSecurityConfig.java
-                WebpageApplication.java
+                    Administrator.java - (Represents the admin user of the system)
+                    Constraint.java - (Represents the constraints applied to a customer by admin)
+                    Customer.java - (Represents the customer for the system.)
+                    User.java - (The base user class which is extended by Administrator and Customer)
+                    UserRepository.java - (The repository that stores User objects)
+                CredentialService.java - (Loads user credentials from UserRepository)
+                MvcConfig.java - (Adds views to the ViewControllerRegistry)
+                PageController.java - (Manages the pages and templates)
+                UserController.java - (Defines the REST calls for user objects)
+                UserCredentials.java - (Wraps the user object to ensure safe credential access)
+                WebSecurityConfig.java - (Configures security for Users)
+                WebpageApplication.java - (Starts the Spring application and loads some starter users)
             resources
             
     .gitignore
