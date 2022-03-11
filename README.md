@@ -34,9 +34,26 @@ Currently, The general structure of the project is as follows.
 
     .circleci
         config.yml - (for CircleCI integration)
-    SRC   
-        files
+    Src   
+        main
+            SpringJPA
+                Model
+                    Administrator.java
+                    Constraint.java
+                    Customer.java
+                    User.java
+                    UserRepository.java
+                CredentialService.java
+                MvcConfig.java
+                PageController.java
+                UserController.java
+                UserCredentials.java
+                WebSecurityConfig.java
+                WebpageApplication.java
+            resources
+            
     .gitignore
+    Milestone 1 UML Diagram.jpg
     Procfile - (for heroku integration)
     README.md
     pom.xml
