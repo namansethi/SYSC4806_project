@@ -67,7 +67,14 @@ Currently, The general structure of the project is as follows.
                 templates
                     layout.html
                 application.properties
-            
+        test
+            java.SpringJPA
+                HttpRequestTest
+                SmokeTest
+                TestingWebApplicationTest
+                TestingWebApplicationTests
+                UserTest
+
     .gitignore
     Milestone 1 UML Diagram.jpg
     Procfile - (for heroku integration)
