@@ -26,4 +26,10 @@ public class TestingWebApplicationTest {
                 .andExpect(content().string(containsString("Lorem ipsum dolor sit amet")));
     }
 
+    @Test
+    public void shouldReturnLoginMessage() throws Exception {
+        this.mockMvc.perform(get("/login")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Please sign in")));
+    }
+
 }
