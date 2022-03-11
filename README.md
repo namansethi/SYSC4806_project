@@ -1,6 +1,6 @@
 # SYSC4806_project
 
-This is the project for SYSC 4806 made by group 8. The project topic chosen for this project ws the "Customer self
+This is the project for SYSC 4806 made by group 8. The project topic chosen for this project is the "Customer self
 server portal".
 
 > Assuming there is already an application called AppX. The customer self-serve portal is responsible for acquiring and
