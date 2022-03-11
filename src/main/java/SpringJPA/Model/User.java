@@ -64,7 +64,7 @@ public class User {
     }
 
     public String toString(){
-        return "Id: " + getUserId() + "User: " + getUsername() + "Password: " + getPassword();
+        return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
     }
 
     public String getRole() {
