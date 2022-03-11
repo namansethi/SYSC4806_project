@@ -51,6 +51,22 @@ Currently, The general structure of the project is as follows.
                 WebSecurityConfig.java - (Configures security for Users)
                 WebpageApplication.java - (Starts the Spring application and loads some starter users)
             resources
+                TrialUser
+                    upgrade.html
+                    userPage.html
+                noUser
+                    landing.html
+                    login.html
+                    pricing.html
+                    register.html
+                    trial.html
+                static/css
+                    landing.css
+                    login.css
+                    pricing.css
+                templates
+                    layout.html
+                application.properties
             
     .gitignore
     Milestone 1 UML Diagram.jpg
