@@ -13,6 +13,10 @@ public class User {
     private String email;
     private String role;
 
+    private long apiCallCount;
+    private long apiCallLimit;
+
+
     public User() {
         this.username = "DEFAULT";
         this.password = "DEFAULT";
@@ -29,7 +33,18 @@ public class User {
         this.password = pass;
         this.role = role;
         this.email = mail;
+    }
 
+    public User(String user, String pass, String role, long apiCallCount, long apiCallLimit) {
+        this.username = user;
+        this.password = pass;
+        this.role = role;
+        this.apiCallCount = apiCallCount;
+        this.apiCallLimit = apiCallLimit;
+    }
+
+    public void incrementApICallCount(){
+        this.apiCallCount++;
     }
 
     public String getUsername() {
@@ -63,11 +78,34 @@ public class User {
         this.userId = userId;
     }
 
-    public String toString(){
-        return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
-    }
 
     public String getRole() {
         return role;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public long getApiCallCount() {
+        return apiCallCount;
+    }
+
+    public void setApiCallCount(long apiCallCount) {
+        this.apiCallCount = apiCallCount;
+    }
+
+    public long getApiCallLimit() {
+        return apiCallLimit;
+    }
+
+    public void setApiCallLimit(long apiCallLimit) {
+        this.apiCallLimit = apiCallLimit;
+    }
+
+    public String toString(){
+        return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword() + " ApiCallCount: " + getApiCallCount() + " ApiCallLimit: " + getApiCallLimit();
+    }
+
+
 }
