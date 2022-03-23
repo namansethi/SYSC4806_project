@@ -28,7 +28,7 @@ public class WebpageApplication {
 		return (args) -> {
 			log.info("Logging started");
 
-			User user1 = new User("User1", passwordEncoder.encode("Password123"), "USER");
+			User user1 = new User("User1", passwordEncoder.encode("a"), "USER", "bingbong@bmail.com");
 			User user2 = new User("User2", passwordEncoder.encode("123Password"), "USER");
 			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "USER");
 
