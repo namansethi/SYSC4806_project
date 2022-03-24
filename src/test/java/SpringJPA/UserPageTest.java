@@ -50,4 +50,19 @@ public class UserPageTest {
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("999")));
     }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser(username="User1")
+    public void testAPILimit() throws Exception{
+        this.mockMvc.perform(post("/user/makeAPICall").with(csrf()));
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("999")));
+        this.mockMvc.perform(post("/user/makeAPICall").with(csrf()));
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("1000")));
+        this.mockMvc.perform(post("/user/makeAPICall").with(csrf()));
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("1000")));
+    }
 }
