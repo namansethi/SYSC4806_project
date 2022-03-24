@@ -1,12 +1,20 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
+import SpringJPA.Model.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/")
     public String landing() { return "landing"; }
 
@@ -27,6 +35,13 @@ public class PageController {
 
     @GetMapping("/upgrade")
     public String upgrade() { return "upgrade"; }
+
+    @GetMapping("/user/admin")
+    public String admin(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        return "adminview";
+    }
+
 
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
