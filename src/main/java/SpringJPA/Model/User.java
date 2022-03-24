@@ -1,6 +1,11 @@
 package SpringJPA.Model;
 import javax.persistence.*;
 
+enum UserType {
+    TRIAL,
+    PREMIUM
+}
+
 @Entity
 @Table(name = "user_login")
 public class User {
@@ -12,24 +17,29 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private int apiCallsAlloted;
+    private UserType userType;
 
     public User() {
-        this.username = "DEFAULT";
-        this.password = "DEFAULT";
+        this("DEFAULT", "DEFAULT", "USER", "DEFAULT", false);
     }
 
     public User(String user, String pass, String role) {
-        this.username = user;
-        this.password = pass;
-        this.role = role;
+        this(user, pass, role, "DEFAULT", false);
     }
 
     public User(String user, String pass, String role, String mail) {
+        this(user, pass, role, mail, false);
+
+    }
+
+    public User(String user, String pass, String role, String mail, boolean paid) {
+        this.apiCallsAlloted = 1000;
         this.username = user;
         this.password = pass;
         this.role = role;
         this.email = mail;
-
+        this.userType = paid ? UserType.PREMIUM : UserType.TRIAL;
     }
 
     public String getUsername() {
@@ -65,6 +75,26 @@ public class User {
 
     public String toString(){
         return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getApiCallsAlloted() {
+        return apiCallsAlloted;
+    }
+
+    public void setApiCallsAlloted(int apiCallsAlloted) {
+        this.apiCallsAlloted = apiCallsAlloted;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public String getRole() {
