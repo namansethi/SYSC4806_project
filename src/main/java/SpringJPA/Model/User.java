@@ -43,8 +43,14 @@ public class User {
         this.apiCallLimit = apiCallLimit;
     }
 
-    public void incrementApICallCount(){
-        this.apiCallCount++;
+    public boolean incrementApICallCount(){
+        if(this.apiCallCount < this.apiCallLimit){
+            this.apiCallCount++;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getUsername() {
