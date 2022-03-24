@@ -46,6 +46,12 @@ public class PageController {
     @GetMapping("/upgrade")
     public String upgrade() { return "upgrade"; }
 
+    @GetMapping("/user/admin")
+    public String admin(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        return "adminview";
+    }
+
     @PostMapping("/user/makeAPICall")
     public String makeAPICall(Principal principal, @ModelAttribute String placeholder){
         User user = userRepository.findByUsername(principal.getName());
