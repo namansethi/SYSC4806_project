@@ -4,9 +4,12 @@ import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Controller
@@ -14,6 +17,9 @@ public class PageController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String landing() { return "landing"; }
@@ -23,9 +29,6 @@ public class PageController {
 
     @GetMapping("/pricing")
     public String pricing() { return "pricing"; }
-
-    @GetMapping("/register")
-    public String register() { return "register"; }
 
     @GetMapping("/user")
     public String user() { return "userPage"; }
@@ -40,6 +43,26 @@ public class PageController {
     public String admin(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "adminview";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("newUser", new User());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerSubmit(@ModelAttribute  User newUser, Model model){
+        if(userRepository.findByUsername(newUser.getUsername()) == null){
+            model.addAttribute("newUser", newUser);
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            newUser.setRole("USER");
+            userRepository.save(newUser);
+            return "landing";
+        }
+        else {
+            return "register";
+        }
     }
 
 
