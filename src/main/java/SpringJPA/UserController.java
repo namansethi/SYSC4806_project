@@ -37,13 +37,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @PostMapping("/user/makeAPICall")
-    public String makeAPICall(Principal principal){
-        User user = userRepository.findByUsername(principal.getName());
-        user.incrementApICallCount();
-        userRepository.save(user);
-        return "call made";
-    }
+
 
     @DeleteMapping("/user/json")
     public void delete(@RequestParam(value = "id") Long id) {

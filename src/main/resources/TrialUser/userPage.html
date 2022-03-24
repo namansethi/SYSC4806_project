@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<script src="http://localhost:35729/livereload.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -16,13 +17,34 @@
         <a class="nav-item nav-link" href="/">Sign Out</a>
     </div>
 </div>
-<div layout:fragment="content">
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">AppX</h1>
-            <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-    </section>
-</div>
+    <div layout:fragment="content">
+        <section class="jumbotron text-center">
+            <h1 class="jumbotron-heading" >Welcome</h1> <br>
+
+            <table class="lead text-muted" style="width: 100%">
+                <thead>
+                <tr>
+                    <th scope="col"> Id </th>
+                    <th scope="col"> Username </th>
+                    <th scope="col"> Role </th>
+                    <th scope="col"> Call Count </th>
+                    <th scope="col"> Call Limit </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td  th:text="${user.userId}"><span> ID </span></td>
+                    <td  th:text="${user.username}"><span> Username </span></td>
+                    <td  th:text="${user.role}"><span> Role </span></td>
+                    <td  th:text="${user.apiCallCount}"><span> Call Count </span></td>
+                    <td  th:text="${user.apiCallLimit}"><span> Call Limit </span></td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="/user/makeAPICall" method="post">
+                <input class="btn btn-primary btn-lg" type="submit" value="Call API">
+            </form>
+        </section>
+    </div>
 </body>
 </html>
