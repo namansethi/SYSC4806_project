@@ -20,16 +20,16 @@
     </div>
     <div layout:fragment="content">
         <div class="text-center">
-            <form class="form-register">
+            <form action="#" th:action="@{/register}" th:object="${newUser}" class="form-register" method="POST" >
                 <h1 class="h3 mb-3 font-weight-normal">Please enter your desired username and password</h1>
                 <label for="inputUsername" class="sr-only">Username</label>
-                <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus th:field="*{username}">
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="confirmPassword" class="sr-only">Confirm Password</label>
-                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required th:field="*{password}">
+                <!--<label for="confirmPassword" class="sr-only">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required th:field="*{confirmedPassword}>-->
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit"><a href="/">Register</a></button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" text="Register"></button>
 
                 <p class="mt-5 mb-3 text-muted">&copy; 2022 SYSC4806</p>
             </form>
