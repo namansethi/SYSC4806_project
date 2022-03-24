@@ -57,6 +57,13 @@ public class PageController {
     @GetMapping("/upgrade")
     public String upgrade() { return "upgrade"; }
 
+    @GetMapping("/user/admin")
+    public String admin(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        return "adminview";
+    }
+
+
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
         ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
