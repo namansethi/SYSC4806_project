@@ -23,14 +23,14 @@ public class AdminPageTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username="User1")
+    @WithMockUser(username="admin")
     public void UserAPICallsAppears() throws Exception{
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("0/1000")));
     }
 
     @Test
-    @WithMockUser(username="User1")
+    @WithMockUser(username="admin")
     public void UserIDAppears() throws Exception{
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("User1")));
