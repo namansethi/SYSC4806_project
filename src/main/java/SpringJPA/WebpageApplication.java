@@ -31,7 +31,7 @@ public class WebpageApplication {
 
 			User user1 = new User("User1", passwordEncoder.encode("Password123"), "USER", Integer.toUnsignedLong(998), Integer.toUnsignedLong(1000));
 			User user2 = new User("User2", passwordEncoder.encode("123Password"), "USER");
-			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "USER");
+			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "USER", Integer.toUnsignedLong(0), Integer.toUnsignedLong(1000));
 			User user4 = new User("admin", passwordEncoder.encode("1Pass2word3"), "ADMIN");
 
 			repository.save(user1);
