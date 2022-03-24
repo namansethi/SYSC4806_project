@@ -1,11 +1,6 @@
 package SpringJPA.Model;
 import javax.persistence.*;
 
-enum UserType {
-    TRIAL,
-    PREMIUM
-}
-
 @Entity
 @Table(name = "user_login")
 public class User {
@@ -17,29 +12,45 @@ public class User {
     private String password;
     private String email;
     private String role;
-    private int apiCallsAlloted;
-    private UserType userType;
+
+    private long apiCallCount;
+    private long apiCallLimit;
+
 
     public User() {
-        this("DEFAULT", "DEFAULT", "USER", "DEFAULT", false);
+        this.username = "DEFAULT";
+        this.password = "DEFAULT";
     }
 
     public User(String user, String pass, String role) {
-        this(user, pass, role, "DEFAULT", false);
+        this.username = user;
+        this.password = pass;
+        this.role = role;
     }
 
     public User(String user, String pass, String role, String mail) {
-        this(user, pass, role, mail, false);
-
-    }
-
-    public User(String user, String pass, String role, String mail, boolean paid) {
-        this.apiCallsAlloted = 1000;
         this.username = user;
         this.password = pass;
         this.role = role;
         this.email = mail;
-        this.userType = paid ? UserType.PREMIUM : UserType.TRIAL;
+    }
+
+    public User(String user, String pass, String role, long apiCallCount, long apiCallLimit) {
+        this.username = user;
+        this.password = pass;
+        this.role = role;
+        this.apiCallCount = apiCallCount;
+        this.apiCallLimit = apiCallLimit;
+    }
+
+    public boolean incrementApICallCount(){
+        if(this.apiCallCount < this.apiCallLimit){
+            this.apiCallCount++;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getUsername() {
@@ -77,27 +88,29 @@ public class User {
         return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public void setRole(String role) {
         this.role = role;
     }
 
-    public int getApiCallsAlloted() {
-        return apiCallsAlloted;
+    public long getApiCallCount() {
+        return apiCallCount;
     }
 
-    public void setApiCallsAlloted(int apiCallsAlloted) {
-        this.apiCallsAlloted = apiCallsAlloted;
+    public void setApiCallCount(long apiCallCount) {
+        this.apiCallCount = apiCallCount;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public long getApiCallLimit() {
+        return apiCallLimit;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setApiCallLimit(long apiCallLimit) {
+        this.apiCallLimit = apiCallLimit;
     }
 
-    public String getRole() {
-        return role;
-    }
+
 }
