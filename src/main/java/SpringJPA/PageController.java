@@ -1,20 +1,49 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
+import SpringJPA.Model.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import java.security.Principal;
+
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private void modifyNavBar(Model model, Principal principal){
+        if(!(principal == null)) {
+            User user = userRepository.findByUsername(principal.getName());
+            model.addAttribute("user", user.getUsername());
+            model.addAttribute("signInOutText", "Sign Out");
+            model.addAttribute("signInOutLink", "/logout");
+        }
+        else{
+            model.addAttribute("signInOutText", "Sign In");
+            model.addAttribute("signInOutLink", "/login");
+        }
+    }
+
     @GetMapping("/")
-    public String landing() { return "landing"; }
+    public String landing(Model model, Principal principal) {
+        modifyNavBar(model, principal);
+        return "landing";
+    }
 
     @GetMapping("/login")
     public String login() { return "login"; }
 
     @GetMapping("/pricing")
-    public String pricing() { return "pricing"; }
+    public String pricing(Model model, Principal principal) {
+        modifyNavBar(model, principal);
+        return "pricing";
+    }
 
     @GetMapping("/register")
     public String register() { return "register"; }
