@@ -1,12 +1,19 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Controller
 public class PageController {
+
+
+
     @GetMapping("/")
     public String landing() { return "landing"; }
 
@@ -16,9 +23,6 @@ public class PageController {
     @GetMapping("/pricing")
     public String pricing() { return "pricing"; }
 
-    @GetMapping("/register")
-    public String register() { return "register"; }
-
     @GetMapping("/user")
     public String user() { return "userPage"; }
 
@@ -27,6 +31,22 @@ public class PageController {
 
     @GetMapping("/upgrade")
     public String upgrade() { return "upgrade"; }
+
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("newUser", new User());
+        return "register";
+    }
+
+    @PostMapping("register")
+    public String registerSubmit(@ModelAttribute User newUser, Model model){
+        model.addAttribute("newUser", newUser);
+        repository.save(newUser);
+        return "result";
+    }
+
+
 
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
