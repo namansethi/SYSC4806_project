@@ -58,10 +58,15 @@ public class PageController {
     public String upgrade() { return "upgrade"; }
 
     @GetMapping("/user/admin")
-    public String admin(Model model) {
+    public String admin(Model model, Principal principal) {
+        modifyNavBar(model, principal);
         model.addAttribute("users", userRepository.findAll());
         return "adminview";
     }
+
+
+
+
 
 
     @Bean
