@@ -41,8 +41,10 @@
                 </tr>
                 </tbody>
             </table>
-            <form action="/user/makeAPICall" method="post">
+            <form th:action="@{/user/makeAPICall}" method="post">
                 <input class="btn btn-primary btn-lg" type="submit" value="Call API">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             </form>
         </section>
     </div>
