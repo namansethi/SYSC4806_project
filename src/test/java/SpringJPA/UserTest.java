@@ -61,7 +61,7 @@ class UserTest {
     void getUsers(){
         controller.create(user3);
         List<User> users = controller.getAll();
-        assertEquals(6, users.size());
+        assertEquals(7, users.size());
         assertEquals(user3.toString(), users.get(users.size()-1).toString());
         assertNotEquals(user2.toString(), users.get(users.size()-1).toString());
 
