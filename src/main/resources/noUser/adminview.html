@@ -9,12 +9,12 @@
 </head>
 <body>
     <div layout:fragment="navhome">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
     </div>
     <div layout:fragment="navright">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/user" th:text="${user}"></a>
-            <a class="nav-item nav-link" th:href="${signInOutLink}" th:text="${signInOutText}" ></a>
+            <a class="nav-item nav-link" href="/user" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" th:href="${signInOutLinkNav}" th:text="${signInOutTextNav}" ></a>
         </div>
     </div>
     <div layout:fragment="content">
@@ -44,12 +44,17 @@
                         <td th:text="${user.apiCallCount} + '/' + ${user.apiCallLimit}"><span> API Calls </span></td>
                         <!--  -->
                         <td>
-                            <form> <!-- action="#" th:action="@{}" th:object="${}" method="post" -->
-                                <input type="text" /> <!--th:field="*{}" -->
-                                <button> Change API calls </button>
+                            <form method="post"  action="#" th:action="@{/user/admin/editRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input th:field="*{apiCallLimit}" type="text"/> <!--th:field="*{}" -->
+                                <input type="submit" value="Change API calls"/>
                             </form>
                         </td>
-                        <td><button> Up/downgrade </button></td>
+                        <td th:if="${user.role!='ADMIN'}">
+                            <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input type="submit" value="Up/downgrade"/>
+                            </form>
+                            <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -3,6 +3,7 @@ package SpringJPA;
 import SpringJPA.Model.Customer;
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,6 @@ public class UserController {
     public User getByUser(@RequestParam(value = "username") String user) {
         return userRepository.findByUsername(user);
     }
-
 
     @PostMapping("/user/json")
     public User create(@RequestBody User user) {

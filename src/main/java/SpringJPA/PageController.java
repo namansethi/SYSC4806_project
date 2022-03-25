@@ -2,6 +2,9 @@ package SpringJPA;
 
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,12 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.security.Principal;
 
 @Controller
 public class PageController {
+
+    private static final Logger log = LoggerFactory.getLogger(WebpageApplication.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -26,13 +33,13 @@ public class PageController {
     private void modifyNavBar(Model model, Principal principal){
         if(!(principal == null)) {
             User user = userRepository.findByUsername(principal.getName());
-            model.addAttribute("user", user.getUsername());
-            model.addAttribute("signInOutText", "Sign Out");
-            model.addAttribute("signInOutLink", "/logout");
+            model.addAttribute("userNav", user.getUsername());
+            model.addAttribute("signInOutTextNav", "Sign Out");
+            model.addAttribute("signInOutLinkNav", "/logout");
         }
         else{
-            model.addAttribute("signInOutText", "Sign In");
-            model.addAttribute("signInOutLink", "/login");
+            model.addAttribute("signInOutTextNav", "Sign In");
+            model.addAttribute("signInOutLinkNav", "/login");
         }
     }
 
@@ -53,6 +60,9 @@ public class PageController {
 
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
+        log.info(principal.toString());
+        log.info(principal.getName());
+        modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -64,12 +74,16 @@ public class PageController {
     public String test() { return "test"; }
 
     @GetMapping("/upgrade")
-    public String upgrade() { return "upgrade"; }
+    public String upgrade(Model model, Principal principal) {
+        modifyNavBar(model, principal);
+        return "upgrade";
+    }
 
     @GetMapping("/user/admin")
     public String admin(Model model, Principal principal) {
         modifyNavBar(model, principal);
         model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("userApi", new User());
         return "adminview";
     }
 
@@ -80,6 +94,24 @@ public class PageController {
         userRepository.save(user);
         return "redirect:/user";
     }
+    @PostMapping("user/admin/editRequests")
+    public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallLimit(apiCallLimit);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/changeStatus")
+    public String changeStatus(@RequestParam(value = "id") Long id){
+        User user = userRepository.findByUserId(id).get(0);
+        if(user.getRole()!=UserType.ADMIN){
+            user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
+        }
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("newUser", new User());
