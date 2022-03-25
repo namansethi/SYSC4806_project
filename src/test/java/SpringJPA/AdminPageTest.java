@@ -36,5 +36,19 @@ public class AdminPageTest {
                 .andExpect(content().string(containsString("User1")));
     }
 
+    @Test
+    @WithMockUser(username="admin")
+    public void testUsernameAppearsWhenLoggedIn() throws Exception{
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("admin")));
+    }
+
+    @Test
+    @WithMockUser(username="admin")
+    public void testSignOutAppearsWhenLoggedIn() throws Exception{
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Sign Out")));
+    }
+
 
 }
