@@ -46,4 +46,10 @@ public class PricingPageTest {
                 .andExpect(content().string(containsString("Sign In")));
     }
 
+    @Test
+    public void testRegisterAppearsWhenLoggedOut() throws Exception{
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Register")));
+    }
+
 }

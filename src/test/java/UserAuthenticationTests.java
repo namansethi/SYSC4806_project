@@ -18,7 +18,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @WebAppConfiguration
 public class UserAuthenticationTests {
 
-    @Autowired
+   /* @Autowired
     private WebApplicationContext context;
 
     private MockMvc mvc;
@@ -36,5 +36,5 @@ public class UserAuthenticationTests {
         mvc
                 .perform(formLogin().user("invalidUser").password("invalidPassword"))
                 .andExpect(unauthenticated());
-    }
+    }*/
 }
