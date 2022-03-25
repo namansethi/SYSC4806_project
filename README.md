@@ -77,6 +77,8 @@ Currently, The general structure of the project is as follows.
 
     .gitignore
     Milestone 1 UML Diagram.jpg
+    Milestone 2 UML Diagram.png
+    Milestone 2 ER Diagram.png
     Procfile - (for heroku integration)
     README.md
     pom.xml
