@@ -41,7 +41,6 @@ public class PageController {
         else{
             model.addAttribute("signInOutTextNav", "Sign In");
             model.addAttribute("signInOutLinkNav", "/login");
-            model.addAttribute("registerNav", "Register");
         }
     }
 
