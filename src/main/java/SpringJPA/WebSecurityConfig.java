@@ -42,26 +42,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/pricing" ).permitAll()
+                    .antMatchers("/", "/pricing", "/register").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .permitAll()
+                    .defaultSuccessUrl("/", true)
                     .and()
                 .logout()
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
                     .permitAll();
-
     }
-
-/*    @Bean
-    @Override
-    public UserDetailsService userDetailsService(){
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(user);
-    }*/
 }

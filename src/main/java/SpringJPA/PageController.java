@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +27,16 @@ public class PageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     private void modifyNavBar(Model model, Principal principal){
         if(!(principal == null)) {
             User user = userRepository.findByUsername(principal.getName());
             model.addAttribute("userNav", user.getUsername());
             model.addAttribute("signInOutTextNav", "Sign Out");
             model.addAttribute("signInOutLinkNav", "/logout");
+            model.addAttribute("registerStyleNav", "display: none;");
         }
         else{
             model.addAttribute("signInOutTextNav", "Sign In");
@@ -53,9 +58,6 @@ public class PageController {
         modifyNavBar(model, principal);
         return "pricing";
     }
-
-    @GetMapping("/register")
-    public String register() { return "register"; }
 
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
@@ -109,6 +111,25 @@ public class PageController {
         }
         userRepository.save(user);
         return "redirect:/user/admin";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("newUser", new User());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerSubmit(@ModelAttribute  User newUser, Model model){
+        if(userRepository.findByUsername(newUser.getUsername()) == null){
+            model.addAttribute("newUser", newUser);
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userRepository.save(newUser);
+            return "redirect:/";
+        }
+        else {
+            return "redirect:/register";
+        }
     }
 
 
