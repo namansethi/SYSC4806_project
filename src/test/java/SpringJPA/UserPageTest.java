@@ -68,6 +68,7 @@ public class UserPageTest {
 
     @Test
     @WithMockUser(username="User1")
+    @DirtiesContext
     public void testUsernameAppearsWhenLoggedIn() throws Exception{
         this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("User1")));
@@ -75,6 +76,7 @@ public class UserPageTest {
 
     @Test
     @WithMockUser(username="User1")
+    @DirtiesContext
     public void testSignOutAppearsWhenLoggedIn() throws Exception{
         this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Sign Out")));
