@@ -18,6 +18,7 @@ import java.util.List;
 class UserTest {
     @Autowired
     UserController controller;
+    PageController controller2;
 
     User user, user1, user2, user3, user4, user5;
 
@@ -80,22 +81,24 @@ class UserTest {
         assertNotEquals(user3.toString(), fetched.toString());
     }
 
-    /*@Test
+   /* @Test
     void changeUserType(){
         controller.create(user4);
         User fetched = controller.getByUser("Reed");
         assertEquals(UserType.TRIAL, fetched.getRole());
 
-        User updated = controller.changeStatus(fetched.getUserId(), UserType.PREMIUM);
+        controller2.changeStatus(fetched.getUserId());
+        User updated = controller.getByUser("Reed");
         assertEquals(UserType.PREMIUM, updated.getRole());
-    }*/
+    }
 
-    /*@Test
+    @Test
     void editAPICalls(){
         controller.create(user5);
         User fetched = controller.getByUser("Lather");
         assertEquals(1000, fetched.getApiCallLimit());
-        User updated = controller.editRequests(fetched.getUserId(), 1500);
+        controller2.editRequests(fetched.getUserId(), 1500);
+        User updated = controller.getByUser("Lather");
         assertEquals(1500, updated.getApiCallLimit());
     }*/
 
