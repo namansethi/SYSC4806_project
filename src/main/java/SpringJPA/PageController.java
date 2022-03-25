@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.security.Principal;
@@ -49,7 +51,13 @@ public class PageController {
     public String register() { return "register"; }
 
     @GetMapping("/user")
-    public String user() { return "userPage"; }
+    public String user(Model model, Principal principal) {
+        String name = principal.getName();
+        User user = userRepository.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "userPage";
+
+    }
 
     @GetMapping("/test")
     public String test() { return "test"; }
@@ -64,10 +72,13 @@ public class PageController {
         return "adminview";
     }
 
-
-
-
-
+    @PostMapping("/user/makeAPICall")
+    public String makeAPICall(Principal principal, @ModelAttribute String placeholder){
+        User user = userRepository.findByUsername(principal.getName());
+        user.incrementApICallCount();
+        userRepository.save(user);
+        return "redirect:/user";
+    }
 
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
