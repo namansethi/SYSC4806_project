@@ -18,8 +18,11 @@ public class User {
 
 
     public User() {
-        this.username = "DEFAULT";
-        this.password = "DEFAULT";
+        this.username = "";
+        this.password = "";
+        this.role = "USER";
+        this.apiCallCount = 0;
+        this.apiCallLimit = 1000;
     }
 
     public User(String user, String pass, String role) {
