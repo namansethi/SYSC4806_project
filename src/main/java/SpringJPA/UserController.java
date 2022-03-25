@@ -40,12 +40,12 @@ public class UserController {
         return userRepository.save(user);
     }*/
 
-    @PostMapping("user/admin/changeStatus")
-    public User changeStatus(@RequestParam(value = "id") Long id, UserType role){
+    /*@PostMapping("user/admin/changeStatus")
+    public User changeStatus(@RequestParam(value = "id") Long id){
         User user = userRepository.findByUserId(id).get(0);
-        user.setRole(role);
+        user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
         return userRepository.save(user);
-    }
+    }*/
 
     @PostMapping("/user/json")
     public User create(@RequestBody User user) {

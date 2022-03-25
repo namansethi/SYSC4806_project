@@ -2,6 +2,7 @@ package SpringJPA;
 
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,16 @@ public class PageController {
     public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
         User user = userRepository.findByUserId(id).get(0);
         user.setApiCallLimit(apiCallLimit);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/changeStatus")
+    public String changeStatus(@RequestParam(value = "id") Long id){
+        User user = userRepository.findByUserId(id).get(0);
+        if(user.getRole()!=UserType.ADMIN){
+            user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
+        }
         userRepository.save(user);
         return "redirect:/user/admin";
     }

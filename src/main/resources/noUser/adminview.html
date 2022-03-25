@@ -48,7 +48,12 @@
                                 <input type="submit" value="Change API calls"/>
                             </form>
                         </td>
-                        <td><button formmethod="post" formaction="#" th:action="@{/user/admin/changeStatus}"> Up/downgrade </button></td>
+                        <td th:if="${user.role!='ADMIN'}">
+                            <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input type="submit" value="Up/downgrade"/>
+                            </form>
+                            <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
+                        </td>
                     </tr>
                 </tbody>
             </table>

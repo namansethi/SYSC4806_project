@@ -80,7 +80,7 @@ class UserTest {
         assertNotEquals(user3.toString(), fetched.toString());
     }
 
-    @Test
+    /*@Test
     void changeUserType(){
         controller.create(user4);
         User fetched = controller.getByUser("Reed");
@@ -88,7 +88,7 @@ class UserTest {
 
         User updated = controller.changeStatus(fetched.getUserId(), UserType.PREMIUM);
         assertEquals(UserType.PREMIUM, updated.getRole());
-    }
+    }*/
 
     /*@Test
     void editAPICalls(){
