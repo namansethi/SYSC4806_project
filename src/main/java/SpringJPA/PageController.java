@@ -2,6 +2,7 @@ package SpringJPA;
 
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.security.Principal;
@@ -69,6 +72,7 @@ public class PageController {
     public String admin(Model model, Principal principal) {
         modifyNavBar(model, principal);
         model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("userApi", new User());
         return "adminview";
     }
 
@@ -79,6 +83,24 @@ public class PageController {
         userRepository.save(user);
         return "redirect:/user";
     }
+    @PostMapping("user/admin/editRequests")
+    public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallLimit(apiCallLimit);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/changeStatus")
+    public String changeStatus(@RequestParam(value = "id") Long id){
+        User user = userRepository.findByUserId(id).get(0);
+        if(user.getRole()!=UserType.ADMIN){
+            user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
+        }
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
 
     @Bean
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {

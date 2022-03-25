@@ -4,6 +4,7 @@ package SpringJPA;
 import SpringJPA.Model.Customer;
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -29,10 +30,10 @@ public class WebpageApplication {
 		return (args) -> {
 			log.info("Logging started");
 
-			User user1 = new User("User1", passwordEncoder.encode("Password123"), "USER", Integer.toUnsignedLong(998), Integer.toUnsignedLong(1000));
-			User user2 = new User("User2", passwordEncoder.encode("123Password"), "USER");
-			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "USER", Integer.toUnsignedLong(0), Integer.toUnsignedLong(1000));
-			User user4 = new User("admin", passwordEncoder.encode("1Pass2word3"), "ADMIN");
+			User user1 = new User("User1", passwordEncoder.encode("Password123"), UserType.TRIAL, Integer.toUnsignedLong(998), Integer.toUnsignedLong(1000));
+			User user2 = new User("User2", passwordEncoder.encode("123Password"), UserType.TRIAL);
+			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), UserType.TRIAL, Integer.toUnsignedLong(0), Integer.toUnsignedLong(1000));
+			User user4 = new User("admin", passwordEncoder.encode("1Pass2word3"), UserType.ADMIN);
 
 			repository.save(user1);
 			repository.save(user2);
