@@ -20,7 +20,7 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
-        this.role = "USER";
+        this.role = UserType.TRIAL;
         this.apiCallCount = 0;
         this.apiCallLimit = 1000;
     }

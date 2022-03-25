@@ -24,7 +24,7 @@
     <div layout:fragment="navright">
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="/pricing">Pricing</a>
-            <a class="nav-item nav-link" href="/register">Register</a>
+            <a class="nav-item nav-link" href="/register" th:text="${registerNav}" th:style="${registerStyleNav}"></a>
             <a class="nav-item nav-link" href="/login">Sign In</a>
         </div>
     </div>

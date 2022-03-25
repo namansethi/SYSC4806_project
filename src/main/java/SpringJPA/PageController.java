@@ -36,10 +36,12 @@ public class PageController {
             model.addAttribute("userNav", user.getUsername());
             model.addAttribute("signInOutTextNav", "Sign Out");
             model.addAttribute("signInOutLinkNav", "/logout");
+            model.addAttribute("registerStyleNav", "display: none;");
         }
         else{
             model.addAttribute("signInOutTextNav", "Sign In");
             model.addAttribute("signInOutLinkNav", "/login");
+            model.addAttribute("registerNav", "Register");
         }
     }
 
@@ -123,12 +125,11 @@ public class PageController {
         if(userRepository.findByUsername(newUser.getUsername()) == null){
             model.addAttribute("newUser", newUser);
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-            newUser.setRole("USER");
             userRepository.save(newUser);
-            return "landing";
+            return "redirect:/";
         }
         else {
-            return "register";
+            return "redirect:/register";
         }
     }
 
