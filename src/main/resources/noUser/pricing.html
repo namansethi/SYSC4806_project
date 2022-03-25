@@ -13,8 +13,9 @@
     </div>
     <div layout:fragment="navright">
         <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/user" th:text="${user}"></a>
             <a class="nav-item nav-link" href="/pricing">Pricing</a>
-            <a class="nav-item nav-link" href="/logout">Sign Out</a>
+            <a class="nav-item nav-link" th:href="${signInOutLink}" th:text="${signInOutText}" ></a>
         </div>
     </div>
     <div layout:fragment="content">
