@@ -32,21 +32,6 @@ public class UserController {
         return userRepository.findByUsername(user);
     }
 
-
-    /*@PostMapping("user/admin/editRequests")
-    public User editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
-        User user = userRepository.findByUserId(id).get(0);
-        user.setApiCallLimit(apiCallLimit);
-        return userRepository.save(user);
-    }*/
-
-    /*@PostMapping("user/admin/changeStatus")
-    public User changeStatus(@RequestParam(value = "id") Long id){
-        User user = userRepository.findByUserId(id).get(0);
-        user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
-        return userRepository.save(user);
-    }*/
-
     @PostMapping("/user/json")
     public User create(@RequestBody User user) {
         return userRepository.save(user);
