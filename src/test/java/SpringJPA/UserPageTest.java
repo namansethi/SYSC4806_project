@@ -65,4 +65,18 @@ public class UserPageTest {
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("1000")));
     }
+
+    @Test
+    @WithMockUser(username="User1")
+    public void testUsernameAppearsWhenLoggedIn() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("User1")));
+    }
+
+    @Test
+    @WithMockUser(username="User1")
+    public void testSignOutAppearsWhenLoggedIn() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Sign Out")));
+    }
 }
