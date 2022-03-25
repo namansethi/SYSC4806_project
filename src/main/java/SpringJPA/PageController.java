@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Controller
@@ -39,7 +41,16 @@ public class PageController {
     @GetMapping("/user/admin")
     public String admin(Model model) {
         model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("userApi", new User());
         return "adminview";
+    }
+
+    @PostMapping("user/admin/editRequests")
+    public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallLimit(apiCallLimit);
+        userRepository.save(user);
+        return "redirect:/user/admin";
     }
 
 

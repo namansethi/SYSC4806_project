@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import SpringJPA.Model.User;
+import SpringJPA.Model.UserType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +19,7 @@ class UserTest {
     @Autowired
     UserController controller;
 
-    User user, user1, user2, user3/*, user4, user5*/;
+    User user, user1, user2, user3, user4, user5;
 
     @BeforeAll
     void initializeUser(){
@@ -26,8 +27,8 @@ class UserTest {
         user1 = new User("Joe", "MyPass1234", "1234 Road");
         user2 = new User("Jill", "MyPass1235", "1235 Road");
         user3 = new User("Joy", "MyPass12355", "12354 Road");
-//        user4 = new User("Reed", "MyPass123567", "123535 Road");
-//        user5 = new User("Lather", "MyPass1235224", "123578 Road");
+        user4 = new User("Reed", "MyPass123567", "123Email.com", UserType.TRIAL);
+        user5 = new User("Lather", "MyPass1235224", "124Email.com", UserType.PREMIUM);
     }
 
     @Test
@@ -59,11 +60,14 @@ class UserTest {
 
     @Test
     void getUsers(){
-        controller.create(user3);
+
         List<User> users = controller.getAll();
-        assertEquals(7, users.size());
-        assertEquals(user3.toString(), users.get(users.size()-1).toString());
-        assertNotEquals(user2.toString(), users.get(users.size()-1).toString());
+        assertEquals(8, users.size());
+        controller.create(user3);
+        List<User> users2 = controller.getAll();
+        assertEquals(9, users2.size());
+        assertEquals(user3.toString(), users2.get(users2.size()-1).toString());
+        assertNotEquals(user2.toString(), users2.get(users2.size()-1).toString());
 
 
     }
@@ -75,5 +79,24 @@ class UserTest {
         assertEquals(user2.toString(), fetched.toString());
         assertNotEquals(user3.toString(), fetched.toString());
     }
+
+    @Test
+    void changeUserType(){
+        controller.create(user4);
+        User fetched = controller.getByUser("Reed");
+        assertEquals(UserType.TRIAL, fetched.getRole());
+
+        User updated = controller.changeStatus(fetched.getUserId(), UserType.PREMIUM);
+        assertEquals(UserType.PREMIUM, updated.getRole());
+    }
+
+    /*@Test
+    void editAPICalls(){
+        controller.create(user5);
+        User fetched = controller.getByUser("Lather");
+        assertEquals(1000, fetched.getApiCallLimit());
+        User updated = controller.editRequests(fetched.getUserId(), 1500);
+        assertEquals(1500, updated.getApiCallLimit());
+    }*/
 
 }

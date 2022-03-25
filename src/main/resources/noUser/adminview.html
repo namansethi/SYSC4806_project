@@ -43,12 +43,12 @@
                         <td th:text="${user.apiCallCount} + '/' + ${user.apiCallLimit}"><span> API Calls </span></td>
                         <!--  -->
                         <td>
-                            <form> <!-- action="#" th:action="@{}" th:object="${}" method="post" -->
-                                <input type="text" /> <!--th:field="*{}" -->
-                                <button> Change API calls </button>
+                            <form method="post"  action="#" th:action="@{/user/admin/editRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input th:field="*{apiCallLimit}" type="text"/> <!--th:field="*{}" -->
+                                <input type="submit" value="Change API calls"/>
                             </form>
                         </td>
-                        <td><button> Up/downgrade </button></td>
+                        <td><button formmethod="post" formaction="#" th:action="@{/user/admin/changeStatus}"> Up/downgrade </button></td>
                     </tr>
                 </tbody>
             </table>

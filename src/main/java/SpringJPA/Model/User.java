@@ -11,7 +11,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String role;
+    private UserType role;
 
     private long apiCallCount;
     private long apiCallLimit;
@@ -22,22 +22,29 @@ public class User {
         this.password = "DEFAULT";
     }
 
-    public User(String user, String pass, String role) {
-        this.username = user;
-        this.password = pass;
-        this.role = role;
+    public User(String user, String pass, UserType role) {
+        this(user, pass, "DEFAULT", role, 0, 1000);
     }
 
-    public User(String user, String pass, String role, String mail) {
+    public User(String user, String pass, String mail){
+        this(user, pass, mail, UserType.TRIAL, 0, 1000);
+    }
+    public User(String user, String pass,String mail, UserType role) {
+        this(user, pass, mail, role, 0, 1000);
+    }
+
+    public User(String user, String pass, long apiCallCount, long apiCallLimit){
+        this(user, pass, "DEFAULT", UserType.TRIAL, apiCallCount, apiCallLimit);
+    }
+
+    public User(String user, String pass, UserType role, long apiCallCount, long apiCallLimit){
+        this(user, pass, "DEFAULT", role, apiCallCount, apiCallLimit);
+    }
+
+    public User(String user, String pass, String mail, UserType role, long apiCallCount, long apiCallLimit) {
         this.username = user;
         this.password = pass;
-        this.role = role;
         this.email = mail;
-    }
-
-    public User(String user, String pass, String role, long apiCallCount, long apiCallLimit) {
-        this.username = user;
-        this.password = pass;
         this.role = role;
         this.apiCallCount = apiCallCount;
         this.apiCallLimit = apiCallLimit;
@@ -88,11 +95,11 @@ public class User {
         return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
     }
 
-    public String getRole() {
+    public UserType getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserType role) {
         this.role = role;
     }
 

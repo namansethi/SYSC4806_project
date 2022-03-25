@@ -3,6 +3,7 @@ package SpringJPA;
 import SpringJPA.Model.Customer;
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,20 @@ public class UserController {
         return userRepository.findByUsername(user);
     }
 
+
+    /*@PostMapping("user/admin/editRequests")
+    public User editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallLimit(apiCallLimit);
+        return userRepository.save(user);
+    }*/
+
+    @PostMapping("user/admin/changeStatus")
+    public User changeStatus(@RequestParam(value = "id") Long id, UserType role){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setRole(role);
+        return userRepository.save(user);
+    }
 
     @PostMapping("/user/json")
     public User create(@RequestBody User user) {
