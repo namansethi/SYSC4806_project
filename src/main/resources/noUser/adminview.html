@@ -9,12 +9,12 @@
 </head>
 <body>
     <div layout:fragment="navhome">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
     </div>
     <div layout:fragment="navright">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/user" th:text="${user}"></a>
-            <a class="nav-item nav-link" th:href="${signInOutLink}" th:text="${signInOutText}" ></a>
+            <a class="nav-item nav-link" href="/user" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" th:href="${signInOutLinkNav}" th:text="${signInOutTextNav}" ></a>
         </div>
     </div>
     <div layout:fragment="content">
