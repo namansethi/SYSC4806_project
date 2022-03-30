@@ -27,6 +27,10 @@
                     <th scope="col"> E-mail </th>
                     <th scope="col"> Role </th>
                     <th scope="col"> API Calls </th>
+                    <th scope="col"> Edit API Calls </th>
+                    <th scope="col"> Edit Email </th>
+                    <th scope="col"> Swap User Role </th>
+                    <th scope="col"> Reset Calls </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,9 +49,21 @@
                                 <input type="submit" value="Change API calls"/>
                             </form>
                         </td>
+                        <td>
+                            <form method="post"  action="#" th:action="@{/user/admin/editEmail(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input th:field="*{email}" type="text"/> <!--th:field="*{}" -->
+                                <input type="submit" value="Change Email"/>
+                            </form>
+                        </td>
                         <td th:if="${user.role!='ADMIN'}">
                             <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
                                 <input type="submit" value="Up/downgrade"/>
+                            </form>
+                            <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
+                        </td>
+                        <td>
+                            <form method="post" action="#" th:action="@{/user/admin/setRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input type="submit" value="Reset"/>
                             </form>
                             <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
                         </td>

@@ -67,6 +67,20 @@ public class AdminPageTest {
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("9175")));
     }
+    @Test
+    @WithMockUser(username="admin")
+    public void testEditEmail() throws Exception{
+        this.mockMvc.perform(post("/user/admin/editEmail").param("id", "1").param("email", "testcase@gmail.com").with(csrf()));
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("testcase@gmail.com")));
+    }
 
+    @Test
+    @WithMockUser(username="admin")
+    public void testResetCalls() throws Exception{
+        this.mockMvc.perform(post("/user/admin/resetCalls").param("id", "1").with(csrf()));
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("0/1000")));
+    }
 
 }
