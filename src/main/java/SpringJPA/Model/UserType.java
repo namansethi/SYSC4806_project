@@ -1,8 +1,8 @@
 package SpringJPA.Model;
 
 public enum UserType {
-    TRIAL,
-    NONTRIAL,
-    PREMIUM,
-    ADMIN
+    ROLE_TRIAL,
+    ROLE_NONTRIAL,
+    ROLE_PREMIUM,
+    ROLE_ADMIN
 }
