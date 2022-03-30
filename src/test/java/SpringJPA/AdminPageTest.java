@@ -68,5 +68,9 @@ public class AdminPageTest {
                 .andExpect(content().string(containsString("9175")));
     }
 
-
+    @Test
+    @WithMockUser(username="user", roles={"USER"})
+    public void testNonAdminUser() throws Exception{
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isForbidden());
+    }
 }
