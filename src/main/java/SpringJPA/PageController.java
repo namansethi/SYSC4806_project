@@ -121,8 +121,8 @@ public class PageController {
     @PostMapping("user/admin/changeStatus")
     public String changeStatus(@RequestParam(value = "id") Long id){
         User user = userRepository.findByUserId(id).get(0);
-        if(user.getRole()!=UserType.ADMIN){
-            user.setRole(user.getRole() == UserType.TRIAL ? UserType.PREMIUM : UserType.TRIAL);
+        if(user.getRole()!=UserType.ROLE_ADMIN){
+            user.setRole(user.getRole() == UserType.ROLE_TRIAL ? UserType.ROLE_PREMIUM : UserType.ROLE_TRIAL);
         }
         userRepository.save(user);
         return "redirect:/user/admin";

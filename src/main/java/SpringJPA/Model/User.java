@@ -20,7 +20,7 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
-        this.role = UserType.TRIAL;
+        this.role = UserType.ROLE_TRIAL;
         this.apiCallCount = 0;
         this.apiCallLimit = 1000;
     }
@@ -30,14 +30,14 @@ public class User {
     }
 
     public User(String user, String pass, String mail){
-        this(user, pass, mail, UserType.TRIAL, 0, 1000);
+        this(user, pass, mail, UserType.ROLE_TRIAL, 0, 1000);
     }
     public User(String user, String pass,String mail, UserType role) {
         this(user, pass, mail, role, 0, 1000);
     }
 
     public User(String user, String pass, long apiCallCount, long apiCallLimit){
-        this(user, pass, "DEFAULT", UserType.TRIAL, apiCallCount, apiCallLimit);
+        this(user, pass, "DEFAULT", UserType.ROLE_TRIAL, apiCallCount, apiCallLimit);
     }
 
     public User(String user, String pass, UserType role, long apiCallCount, long apiCallLimit){

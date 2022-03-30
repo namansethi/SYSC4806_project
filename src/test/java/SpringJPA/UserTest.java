@@ -28,8 +28,8 @@ class UserTest {
         user1 = new User("Joe", "MyPass1234", "1234 Road");
         user2 = new User("Jill", "MyPass1235", "1235 Road");
         user3 = new User("Joy", "MyPass12355", "12354 Road");
-        user4 = new User("Reed", "MyPass123567", "123Email.com", UserType.TRIAL);
-        user5 = new User("Lather", "MyPass1235224", "124Email.com", UserType.PREMIUM);
+        user4 = new User("Reed", "MyPass123567", "123Email.com", UserType.ROLE_TRIAL);
+        user5 = new User("Lather", "MyPass1235224", "124Email.com", UserType.ROLE_PREMIUM);
     }
 
     @Test
