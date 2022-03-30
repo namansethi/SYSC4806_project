@@ -6,6 +6,26 @@
     <meta charset="UTF-8">
     <title>Admin</title>
     <link href="css/admin.css" rel="stylesheet">
+    <style>
+        .userTable {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.admin-button{
+    padding: 0.4rem 0.4em;
+    font-size: 1rem;
+    line-height: 0.7;
+    border-radius: 0.3rem;
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.admin-table{
+    background-color: #d0deeb;
+}
+
+    </style>
 </head>
 <body>
     <div layout:fragment="navhome">
@@ -20,7 +40,7 @@
     <div layout:fragment="content">
         <div class="userTable">
             <h1>User List</h1>
-            <table class="table table-hover table-bordered table-striped">
+            <table class="table table-hover table-bordered table-striped admin-table">
                 <thead>
                 <tr>
                     <th scope="col"> Username </th>
@@ -46,24 +66,24 @@
                         <td>
                             <form method="post"  action="#" th:action="@{/user/admin/editRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
                                 <input th:field="*{apiCallLimit}" type="text"/> <!--th:field="*{}" -->
-                                <input type="submit" value="Change API calls"/>
+                                <input class="admin-button" type="submit" value="Change API calls"/>
                             </form>
                         </td>
                         <td>
                             <form method="post"  action="#" th:action="@{/user/admin/editEmail(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
                                 <input th:field="*{email}" type="text"/> <!--th:field="*{}" -->
-                                <input type="submit" value="Change Email"/>
+                                <input class="admin-button" type="submit" value="Change Email"/>
                             </form>
                         </td>
                         <td th:if="${user.role!='ADMIN'}">
                             <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
-                                <input type="submit" value="Up/downgrade"/>
+                                <input class="admin-button" type="submit" value="Up/downgrade"/>
                             </form>
                             <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
                         </td>
                         <td>
                             <form method="post" action="#" th:action="@{/user/admin/setRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
-                                <input type="submit" value="Reset"/>
+                                <input class="admin-button" type="submit" value="Reset"/>
                             </form>
                             <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
                         </td>

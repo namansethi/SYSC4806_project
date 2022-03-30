@@ -3,4 +3,16 @@
     padding-right: 5%;
 }
 
+.admin-button{
+    padding: 0.4rem 0.4em;
+    font-size: 1rem;
+    line-height: 0.7;
+    border-radius: 0.3rem;
+    color: #f1f;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.admin-table{
+    background-color: #d0deeb;
+}
 
