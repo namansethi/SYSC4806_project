@@ -18,6 +18,7 @@ public class Scheduler {
     public void wipeAPICallsMidnight() {
         for (User user: userRepository.findAll()){
             user.setApiCallCount(0);
+            userRepository.save(user);
         }
     }
 }

@@ -1,11 +1,12 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
+import SpringJPA.Model.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.support.CronTrigger;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -17,14 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-@AutoConfigureMockMvc
 @SpringBootTest
 public class SchedulerTest {
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    Scheduler scheduler;
 
     @Test
-    @WithMockUser(username="User1")
-    public void UserAPICallsReset(){
+    public void UserAPICallsCronTest(){
         CronTrigger trigger = new CronTrigger("0 0 0 * * ?");
         Instant now = Instant.now();
 
@@ -63,5 +67,19 @@ public class SchedulerTest {
 
     }
 
+    @Test
+    public void UserAPICallsResetTest(){
 
+
+        User loadedUser = userRepository.findByUsername("User1");
+        long originalAPICount = loadedUser.getApiCallCount();
+        scheduler.wipeAPICallsMidnight();
+        long newAPICount = userRepository.findByUsername("User1").getApiCallCount();
+
+        System.out.println(originalAPICount);
+        System.out.println(newAPICount);
+        assertEquals(newAPICount, 0);
+
+
+    }
 }
