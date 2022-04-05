@@ -102,6 +102,21 @@ public class PageController {
         userRepository.save(user);
         return "redirect:/user/admin";
     }
+    @PostMapping("user/admin/setRequests")
+    public String setRequests(@RequestParam(value = "id") Long id){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallCount(0L);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/editEmail")
+    public String editEmail(@RequestParam(value = "id") Long id, String email){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setEmail(email);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
 
     @PostMapping("user/admin/changeStatus")
     public String changeStatus(@RequestParam(value = "id") Long id){
