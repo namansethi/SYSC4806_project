@@ -83,6 +83,14 @@ public class UserPageTest {
     }
 
     @Test
+    @WithMockUser(username="admin", roles ="ADMIN")
+    @DirtiesContext
+    public void testAdminPageAppearsWhenLoggedInAsAdmin() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Admin Page")));
+    }
+
+    @Test
     @WithMockUser(username="User2", roles ="NON_TRIAL")
     public void testNonTrialUser() throws Exception{
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
