@@ -13,7 +13,8 @@
     </div>
     <div layout:fragment="navright">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/user" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" href="/user" th:style="${userStyleNav}" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" href="/user/admin" th:style="${adminStyleNav}">Admin Page</a>
             <a class="nav-item nav-link" href="/pricing">Pricing</a>
             <a class="nav-item nav-link" href="/register" th:style="${registerStyleNav}">Register</a>
             <a class="nav-item nav-link" th:href="${signInOutLinkNav}" th:text="${signInOutTextNav}" ></a>
