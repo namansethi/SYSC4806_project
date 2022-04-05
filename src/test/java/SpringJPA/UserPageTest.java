@@ -28,7 +28,7 @@ public class UserPageTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles="TRIAL")
     public void UserAPICallsAppears() throws Exception{
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("998")));
@@ -36,7 +36,7 @@ public class UserPageTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles="TRIAL")
     public void UserIDAppears() throws Exception{
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("User1")));
@@ -44,7 +44,7 @@ public class UserPageTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles="TRIAL")
     public void testAPICall() throws Exception{
         this.mockMvc.perform(post("/user/makeAPICall").with(csrf()));
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
@@ -53,7 +53,7 @@ public class UserPageTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles ="TRIAL")
     public void testAPILimit() throws Exception{
         this.mockMvc.perform(post("/user/makeAPICall").with(csrf()));
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
@@ -67,7 +67,7 @@ public class UserPageTest {
     }
 
     @Test
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles ="TRIAL")
     @DirtiesContext
     public void testUsernameAppearsWhenLoggedIn() throws Exception{
         this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
@@ -75,10 +75,28 @@ public class UserPageTest {
     }
 
     @Test
-    @WithMockUser(username="User1")
+    @WithMockUser(username="User1", roles ="TRIAL")
     @DirtiesContext
     public void testSignOutAppearsWhenLoggedIn() throws Exception{
         this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Sign Out")));
+    }
+
+    @Test
+    @WithMockUser(username="User2", roles ="NON_TRIAL")
+    public void testNonTrialUser() throws Exception{
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username="User3", roles ="PREMIUM")
+    public void testPremiumUser() throws Exception{
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username="admin", roles ="ADMIN")
+    public void testAdminUser() throws Exception{
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk());
     }
 }
