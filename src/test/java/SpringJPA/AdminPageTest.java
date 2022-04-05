@@ -84,7 +84,7 @@ public class AdminPageTest {
     }
 
     @Test
-    @WithMockUser(username="user", roles={"USER"})
+    @WithMockUser(username="User1", roles ="TRIAL")
     public void testNonAdminUser() throws Exception{
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isForbidden());
     }
