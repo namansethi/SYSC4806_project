@@ -58,6 +58,12 @@ public class PageController {
     @GetMapping("/")
     public String landing(Model model, Principal principal) {
         modifyNavBar(model, principal);
+        if(!(principal == null)) {
+            User user = userRepository.findByUsername(principal.getName());
+            user.checkTrialEnd();
+            updateAuthWhenUpgrading(user);
+            userRepository.save(user);
+        }
         return "landing";
     }
 
@@ -75,7 +81,6 @@ public class PageController {
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
-        user.checkTrialEnd();
         model.addAttribute("user", user);
         return "userPage";
     }
@@ -131,7 +136,7 @@ public class PageController {
     private void updateAuthWhenUpgrading(User user) {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
         updatedAuthorities.add(authority);
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
