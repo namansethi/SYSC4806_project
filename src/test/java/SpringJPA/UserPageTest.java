@@ -1,14 +1,14 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
+import SpringJPA.Model.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,6 +25,9 @@ public class UserPageTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @DirtiesContext
@@ -106,5 +109,15 @@ public class UserPageTest {
     @WithMockUser(username="admin", roles ="ADMIN")
     public void testAdminUser() throws Exception{
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username="User1")
+    @DirtiesContext
+    public void testAfterTrial() throws Exception{
+        User loadedUser = userRepository.findByUsername("User1");
+        loadedUser.setStartTime(System.currentTimeMillis() - 2592000001l);
+        this.userRepository.save(loadedUser);
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
     }
 }
