@@ -55,7 +55,6 @@ public class User {
         this.role = role;
         this.apiCallCount = apiCallCount;
         this.apiCallLimit = apiCallLimit;
-        this.startTime = System.currentTimeMillis();
     }
 
     /**
