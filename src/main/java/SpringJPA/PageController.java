@@ -72,14 +72,10 @@ public class PageController {
 
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
-        log.info(principal.toString());
-        log.info(principal.getName());
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
-        log.info("User: " + user.toString());
         user.checkTrialEnd();
-        log.info("User: " + user.toString());
         model.addAttribute("user", user);
         return "userPage";
     }
@@ -182,10 +178,10 @@ public class PageController {
         if(role.equals("Trial")) {
             user.setRole(UserType.ROLE_TRIAL);
             user.startTrial();
-        } else if (role.equals("NonTrial")){
-            user.setRole(UserType.ROLE_NONTRIAL);
-        } else {
+        } else if (role.equals("Premium")){
             user.setRole(UserType.ROLE_PREMIUM);
+        } else {
+            user.setRole(UserType.ROLE_NONTRIAL);
         }
         userRepository.save(user);
         return "redirect:/user/admin";
