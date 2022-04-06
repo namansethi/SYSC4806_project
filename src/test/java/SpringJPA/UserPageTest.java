@@ -81,4 +81,12 @@ public class UserPageTest {
         this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Sign Out")));
     }
+
+    @Test
+    @WithMockUser(username="User1")
+    @DirtiesContext
+    public void HiddenUserStartTimeAccessible() throws Exception{
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Time:")));
+    }
 }

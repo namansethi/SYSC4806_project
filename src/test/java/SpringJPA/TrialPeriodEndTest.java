@@ -47,7 +47,6 @@ class TrialPeriodEndTest {
     public void shouldBeTrialUserBeforeEnd() {
         controller.create(user2);
         User fetchUser2 = controller.getByUser("Carl");
-        System.out.println(fetchUser2.getStartTime());
         fetchUser2.checkTrialEnd();
         assertEquals(UserType.ROLE_TRIAL, fetchUser2.getRole());
     }
