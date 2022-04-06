@@ -1,7 +1,6 @@
 package SpringJPA.Model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_login")
@@ -15,6 +14,9 @@ public class User {
     private String email;
     private UserType role;
     private long startTime;
+    private long endTime;
+
+    private final long MILLIS_IN_DAY = 86400000;
     private boolean hasUsedTrial;
 
     private long apiCallCount;
@@ -65,8 +67,7 @@ public class User {
      */
     public boolean checkTrialEnd() {
         // check if trial user and if current day is 30 days ahead of startTime
-        long length = System.currentTimeMillis() - this.startTime;
-        if(this.role == UserType.ROLE_TRIAL && length >= 2592000000l) { // 30 days = 2592000000 milliseconds
+        if(this.role == UserType.ROLE_TRIAL && this.endTime <= System.currentTimeMillis()) {
             this.setRole(UserType.ROLE_NONTRIAL);
             return true;
         }
@@ -75,6 +76,7 @@ public class User {
 
     public void startTrial() {
         this.startTime = System.currentTimeMillis();
+        this.endTime = this.startTime + 30 * MILLIS_IN_DAY;
         this.hasUsedTrial = true;
     }
 
@@ -95,6 +97,26 @@ public class User {
 
     public long getStartTime() {
         return this.startTime;
+    }
+
+    public void changeTrialPeriod(int period){
+        this.endTime = System.currentTimeMillis() + period * MILLIS_IN_DAY;
+
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getEndTimeInDays(){
+        if(this.endTime != 0L){
+            return (int)((this.endTime - startTime)/MILLIS_IN_DAY);
+        }
+        return 999;//Number that will never happen in order to check for errors
     }
 
     public String getUsername() {

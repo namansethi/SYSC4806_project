@@ -37,6 +37,7 @@ public class WebpageApplication {
 			User user2 = new User("User2", passwordEncoder.encode("123Password"), "user2@hotmail.com", UserType.ROLE_NONTRIAL);
 			User user3 = new User("User3", passwordEncoder.encode("Pass123word"), "user3@yahoo.com", UserType.ROLE_PREMIUM, Integer.toUnsignedLong(0), Integer.toUnsignedLong(1000));
 			User user4 = new User("admin", passwordEncoder.encode("1Pass2word3"), "admin@admin.com", UserType.ROLE_ADMIN);
+			user1.startTrial();
 
 			repository.save(user1);
 			repository.save(user2);

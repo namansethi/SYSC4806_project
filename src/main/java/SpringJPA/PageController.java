@@ -165,11 +165,27 @@ public class PageController {
         return "redirect:/user/admin";
     }
 
-    @PostMapping("user/admin/changeStatus")
-    public String changeStatus(@RequestParam(value = "id") Long id){
+
+
+    @PostMapping("user/admin/changeTrialPeriod")
+    public String changeTrialPeriod(@RequestParam(value = "id") Long id, String startTime){
+        int time = Integer.parseInt(startTime);
         User user = userRepository.findByUserId(id).get(0);
-        if(user.getRole()!=UserType.ROLE_ADMIN){
-            user.setRole(user.getRole() == UserType.ROLE_TRIAL ? UserType.ROLE_PREMIUM : UserType.ROLE_TRIAL);
+        user.changeTrialPeriod(time);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/changeStatusS")
+    public String changeStatusSelect(@RequestParam(value = "id") Long id, String role){
+        User user = userRepository.findByUserId(id).get(0);
+        if(role.equals("Trial")) {
+            user.setRole(UserType.ROLE_TRIAL);
+            user.startTrial();
+        } else if (role.equals("NonTrial")){
+            user.setRole(UserType.ROLE_NONTRIAL);
+        } else {
+            user.setRole(UserType.ROLE_PREMIUM);
         }
         userRepository.save(user);
         return "redirect:/user/admin";
