@@ -11,6 +11,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.security.Principal;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -114,12 +116,12 @@ public class UserPageTest {
     }
 
     @Test
-    @WithMockUser(username="User1", roles="TRIAL")
+    @WithMockUser(username="User1")
     @DirtiesContext
-    public void buttonDisableAfterTrial() throws Exception{
+    public void testAfterTrial() throws Exception{
         User loadedUser = userRepository.findByUsername("User1");
         loadedUser.setStartTime(System.currentTimeMillis() - 2592000001l);
-        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Trial Ended")));
+        this.userRepository.save(loadedUser);
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
     }
 }
