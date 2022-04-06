@@ -9,6 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -119,5 +123,18 @@ public class UserPageTest {
         loadedUser.setStartTime(System.currentTimeMillis() - 2592000001l);
         this.userRepository.save(loadedUser);
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser(username="User1", roles ="TRIAL")
+    public void testTrialDisplay() throws Exception{
+        User loadedUser = userRepository.findByUsername("User1");
+        int daysFromTrialStart = 5;
+        int trialDuration = 30;
+        loadedUser.setStartTime(Instant.now().plus(daysFromTrialStart, ChronoUnit.DAYS).toEpochMilli());
+        this.userRepository.save(loadedUser);
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString(String.valueOf(trialDuration-daysFromTrialStart-1))));
     }
 }

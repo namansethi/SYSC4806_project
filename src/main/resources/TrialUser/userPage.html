@@ -32,6 +32,7 @@
                     <th scope="col"> Id </th>
                     <th scope="col"> Username </th>
                     <th scope="col"> Role </th>
+                    <th scope="col"> Trial Days Left </th>
                     <th scope="col"> Call Count </th>
                     <th scope="col"> Call Limit </th>
                 </tr>
@@ -41,6 +42,7 @@
                     <td  th:text="${user.userId}"><span> ID </span></td>
                     <td  th:text="${user.username}"><span> Username </span></td>
                     <td  th:text="${user.role}"><span> Role </span></td>
+                    <td  th:text="${user.getEndTimeInDays()}"><span> Trial Days Left </span></td>
                     <td  id="count" th:text="${user.apiCallCount}"><span> Call Count </span></td>
                     <td  id="limit" th:text="${user.apiCallLimit}"><span> Call Limit </span></td>
                 </tr>
