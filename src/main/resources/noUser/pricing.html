@@ -39,7 +39,12 @@
                             <li>Email support</li>
                             <li>Help center access</li>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Start Free Trial</button>
+                        <form th:action="@{/user/FreeTrialRequest}" method="post">
+                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Start Free Trial</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        </form>
+
                     </div>
                 </div>
                 <div class="card mb-4 box-shadow">
@@ -53,7 +58,11 @@
                             <li>Priority email support</li>
                             <li>Help center access</li>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+                        <form th:action="@{/user/PaidUserRequest}" method="post">
+                            <button type="submit" class="btn btn-lg btn-block btn-primary">Get started</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        </form>
                     </div>
                 </div>
             </div>
