@@ -30,14 +30,14 @@ public class User {
     }
 
     public User(String user, String pass, String mail){
-        this(user, pass, mail, UserType.ROLE_TRIAL, 0, 1000);
+        this(user, pass, mail, UserType.ROLE_NONTRIAL, 0, 1000);
     }
     public User(String user, String pass,String mail, UserType role) {
         this(user, pass, mail, role, 0, 1000);
     }
 
     public User(String user, String pass, long apiCallCount, long apiCallLimit){
-        this(user, pass, "DEFAULT", UserType.ROLE_TRIAL, apiCallCount, apiCallLimit);
+        this(user, pass, "DEFAULT", UserType.ROLE_NONTRIAL, apiCallCount, apiCallLimit);
     }
 
     public User(String user, String pass, UserType role, long apiCallCount, long apiCallLimit){
