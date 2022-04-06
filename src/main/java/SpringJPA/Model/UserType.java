@@ -11,7 +11,7 @@ public enum UserType {
         this.name = name;
     }
 
-    public String subString(){
+    public String getName(){
         return name;
     }
 }
