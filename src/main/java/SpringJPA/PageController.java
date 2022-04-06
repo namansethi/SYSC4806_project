@@ -33,11 +33,16 @@ public class PageController {
         if(!(principal == null)) {
             User user = userRepository.findByUsername(principal.getName());
             model.addAttribute("userNav", user.getUsername());
+            if (user.getRole() != UserType.ROLE_ADMIN) {
+                model.addAttribute("adminStyleNav", "display: none;");
+            }
             model.addAttribute("signInOutTextNav", "Sign Out");
             model.addAttribute("signInOutLinkNav", "/logout");
             model.addAttribute("registerStyleNav", "display: none;");
         }
         else{
+            model.addAttribute("userStyleNav", "display: none;");
+            model.addAttribute("adminStyleNav", "display: none;");
             model.addAttribute("signInOutTextNav", "Sign In");
             model.addAttribute("signInOutLinkNav", "/login");
         }
@@ -98,6 +103,21 @@ public class PageController {
     public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){
         User user = userRepository.findByUserId(id).get(0);
         user.setApiCallLimit(apiCallLimit);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+    @PostMapping("user/admin/setRequests")
+    public String setRequests(@RequestParam(value = "id") Long id){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setApiCallCount(0L);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/editEmail")
+    public String editEmail(@RequestParam(value = "id") Long id, String email){
+        User user = userRepository.findByUserId(id).get(0);
+        user.setEmail(email);
         userRepository.save(user);
         return "redirect:/user/admin";
     }

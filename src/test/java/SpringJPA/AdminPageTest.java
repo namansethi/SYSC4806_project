@@ -54,6 +54,14 @@ public class AdminPageTest {
     }
 
     @Test
+    @WithMockUser(username="admin", roles ="ADMIN")
+    @DirtiesContext
+    public void testAdminPageAppearsWhenLoggedInAsAdmin() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Admin Page")));
+    }
+
+    @Test
     @WithMockUser(username="admin", roles={"ADMIN"})
     public void testChangeUser() throws Exception{
         this.mockMvc.perform(post("/user/admin/changeStatus").param("id", "1").with(csrf()));
@@ -67,9 +75,24 @@ public class AdminPageTest {
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("9175")));
     }
+    @Test
+    @WithMockUser(username="admin", roles={"ADMIN"})
+    public void testEditEmail() throws Exception{
+        this.mockMvc.perform(post("/user/admin/editEmail").param("id", "1").param("email", "testcase@gmail.com").with(csrf()));
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("testcase@gmail.com")));
+    }
 
     @Test
-    @WithMockUser(username="user", roles={"USER"})
+    @WithMockUser(username="admin", roles={"ADMIN"})
+    public void testResetCalls() throws Exception{
+        this.mockMvc.perform(post("/user/admin/resetCalls").param("id", "1").with(csrf()));
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("0/1000")));
+    }
+
+    @Test
+    @WithMockUser(username="User1", roles ="TRIAL")
     public void testNonAdminUser() throws Exception{
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isForbidden());
     }

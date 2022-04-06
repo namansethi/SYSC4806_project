@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
@@ -40,6 +41,14 @@ public class LandingPageTest {
     public void testUsernameAppearsWhenLoggedIn() throws Exception{
         this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("User1")));
+    }
+
+    @Test
+    @WithMockUser(username="admin", roles ="ADMIN")
+    @DirtiesContext
+    public void testAdminPageAppearsWhenLoggedInAsAdmin() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Admin Page")));
     }
 
     @Test

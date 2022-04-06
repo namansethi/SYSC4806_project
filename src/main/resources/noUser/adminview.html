@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
-    <link href="css/admin.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
 </head>
 <body>
     <div layout:fragment="navhome">
@@ -13,20 +13,27 @@
     </div>
     <div layout:fragment="navright">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/user" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" href="/user" th:style="${userStyleNav}" th:text="${userNav}"></a>
+            <a class="nav-item nav-link" href="/user/admin" th:style="${adminStyleNav}">Admin Page</a>
+            <a class="nav-item nav-link" href="/pricing">Pricing</a>
+            <a class="nav-item nav-link" href="/register" th:style="${registerStyleNav}">Register</a>
             <a class="nav-item nav-link" th:href="${signInOutLinkNav}" th:text="${signInOutTextNav}" ></a>
         </div>
     </div>
     <div layout:fragment="content">
         <div class="userTable">
             <h1>User List</h1>
-            <table class="table table-hover table-bordered table-striped">
+            <table class="table table-hover table-bordered table-striped admin-table">
                 <thead>
                 <tr>
                     <th scope="col"> Username </th>
                     <th scope="col"> E-mail </th>
                     <th scope="col"> Role </th>
                     <th scope="col"> API Calls </th>
+                    <th scope="col"> Edit API Calls </th>
+                    <th scope="col"> Edit Email </th>
+                    <th scope="col"> Swap User Role </th>
+                    <th scope="col"> Reset Calls </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,12 +49,24 @@
                         <td>
                             <form method="post"  action="#" th:action="@{/user/admin/editRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
                                 <input th:field="*{apiCallLimit}" type="text"/> <!--th:field="*{}" -->
-                                <input type="submit" value="Change API calls"/>
+                                <input class="admin-button" type="submit" value="Change API calls"/>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post"  action="#" th:action="@{/user/admin/editEmail(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input th:field="*{email}" type="text"/> <!--th:field="*{}" -->
+                                <input class="admin-button" type="submit" value="Change Email"/>
                             </form>
                         </td>
                         <td th:if="${user.role!='ADMIN'}">
                             <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
-                                <input type="submit" value="Up/downgrade"/>
+                                <input class="admin-button" type="submit" value="Up/downgrade"/>
+                            </form>
+                            <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
+                        </td>
+                        <td>
+                            <form method="post" action="#" th:action="@{/user/admin/setRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <input class="admin-button" type="submit" value="Reset"/>
                             </form>
                             <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
                         </td>
