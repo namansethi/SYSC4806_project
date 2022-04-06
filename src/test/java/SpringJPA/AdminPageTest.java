@@ -54,6 +54,14 @@ public class AdminPageTest {
     }
 
     @Test
+    @WithMockUser(username="admin", roles ="ADMIN")
+    @DirtiesContext
+    public void testAdminPageAppearsWhenLoggedInAsAdmin() throws Exception{
+        this.mockMvc.perform(get("/pricing")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Admin Page")));
+    }
+
+    @Test
     @WithMockUser(username="admin", roles={"ADMIN"})
     public void testChangeUser() throws Exception{
         this.mockMvc.perform(post("/user/admin/changeStatus").param("id", "1").with(csrf()));

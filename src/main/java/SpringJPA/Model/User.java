@@ -1,5 +1,7 @@
 package SpringJPA.Model;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_login")
@@ -12,6 +14,7 @@ public class User {
     private String password;
     private String email;
     private UserType role;
+    private long startTime;
 
     private long apiCallCount;
     private long apiCallLimit;
@@ -23,6 +26,7 @@ public class User {
         this.role = UserType.ROLE_NONTRIAL;
         this.apiCallCount = 0;
         this.apiCallLimit = 1000;
+
     }
 
     public User(String user, String pass, UserType role) {
@@ -53,6 +57,24 @@ public class User {
         this.apiCallLimit = apiCallLimit;
     }
 
+    /**
+     *
+     * @return false if trial did not end, true if trial has ended
+     */
+    public boolean checkTrialEnd() {
+        // check if trial user and if current day is 30 days ahead of startTime
+        long length = System.currentTimeMillis() - this.startTime;
+        if(this.role == UserType.ROLE_TRIAL && length >= 2592000000l) { // 30 days = 2592000000 milliseconds
+            this.setRole(UserType.ROLE_NONTRIAL);
+            return true;
+        }
+        return false;
+    }
+
+    public void startTrial() {
+        this.startTime = System.currentTimeMillis();
+    }
+
     public boolean incrementApICallCount(){
         if(this.apiCallCount < this.apiCallLimit){
             this.apiCallCount++;
@@ -61,6 +83,15 @@ public class User {
         else {
             return false;
         }
+    }
+
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getStartTime() {
+        return this.startTime;
     }
 
     public String getUsername() {

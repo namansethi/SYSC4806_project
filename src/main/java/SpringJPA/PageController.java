@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -42,11 +41,16 @@ public class PageController {
         if(!(principal == null)) {
             User user = userRepository.findByUsername(principal.getName());
             model.addAttribute("userNav", user.getUsername());
+            if (user.getRole() != UserType.ROLE_ADMIN) {
+                model.addAttribute("adminStyleNav", "display: none;");
+            }
             model.addAttribute("signInOutTextNav", "Sign Out");
             model.addAttribute("signInOutLinkNav", "/logout");
             model.addAttribute("registerStyleNav", "display: none;");
         }
         else{
+            model.addAttribute("userStyleNav", "display: none;");
+            model.addAttribute("adminStyleNav", "display: none;");
             model.addAttribute("signInOutTextNav", "Sign In");
             model.addAttribute("signInOutLinkNav", "/login");
         }
@@ -74,9 +78,9 @@ public class PageController {
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
+        user.checkTrialEnd();
         model.addAttribute("user", user);
         return "userPage";
-
     }
 
     @GetMapping("/test")
