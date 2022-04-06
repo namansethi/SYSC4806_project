@@ -23,7 +23,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -116,12 +115,7 @@ public class PageController {
         if (user.getRole() == UserType.ROLE_NONTRIAL && !user.getHasUsedTrial()){
             user.setRole(UserType.ROLE_TRIAL);
             user.startTrial();
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-            updatedAuthorities.add(authority);
-            Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-            SecurityContextHolder.getContext().setAuthentication(newAuth);
+            updateAuthWhenUpgrading(user);
         }
         userRepository.save(user);
         return "redirect:/user";
@@ -132,15 +126,19 @@ public class PageController {
         User user = userRepository.findByUsername(principal.getName());
         if (user.getRole() == UserType.ROLE_NONTRIAL || user.getRole() == UserType.ROLE_TRIAL){
             user.setRole(UserType.ROLE_PREMIUM);
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-            updatedAuthorities.add(authority);
-            Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-            SecurityContextHolder.getContext().setAuthentication(newAuth);
+            updateAuthWhenUpgrading(user);
         }
         userRepository.save(user);
         return "redirect:/user";
+    }
+
+    private void updateAuthWhenUpgrading(User user) {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+        updatedAuthorities.add(authority);
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
 
 
