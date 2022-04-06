@@ -78,7 +78,9 @@ public class PageController {
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
+        log.info("User: " + user.toString());
         user.checkTrialEnd();
+        log.info("User: " + user.toString());
         model.addAttribute("user", user);
         return "userPage";
     }
@@ -110,14 +112,16 @@ public class PageController {
 
     @PostMapping("/user/FreeTrialRequest")
     public String makeFreeTrialRequest(Principal principal, @ModelAttribute String placeholder){
-
         User user = userRepository.findByUsername(principal.getName());
-        //TODO add check for if trial has been consumed
-        if (user.getRole() == UserType.ROLE_NONTRIAL){
+        if (user.getRole() == UserType.ROLE_NONTRIAL && !user.getHasUsedTrial()){
             user.setRole(UserType.ROLE_TRIAL);
-            updateUserAuthRoles(user);
-
-            //TODO set the trial start date to now
+            user.startTrial();
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+            updatedAuthorities.add(authority);
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
         }
         userRepository.save(user);
         return "redirect:/user";
@@ -128,20 +132,17 @@ public class PageController {
         User user = userRepository.findByUsername(principal.getName());
         if (user.getRole() == UserType.ROLE_NONTRIAL || user.getRole() == UserType.ROLE_TRIAL){
             user.setRole(UserType.ROLE_PREMIUM);
-            updateUserAuthRoles(user);
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+            updatedAuthorities.add(authority);
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
         }
         userRepository.save(user);
         return "redirect:/user";
     }
 
-    private void updateUserAuthRoles(User user) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-        updatedAuthorities.add(authority);
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-    }
 
     @PostMapping("user/admin/editRequests")
     public String editRequests(@RequestParam(value = "id") Long id, long apiCallLimit){

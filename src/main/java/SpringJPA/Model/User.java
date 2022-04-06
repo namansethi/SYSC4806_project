@@ -15,6 +15,7 @@ public class User {
     private String email;
     private UserType role;
     private long startTime;
+    private boolean hasUsedTrial;
 
     private long apiCallCount;
     private long apiCallLimit;
@@ -26,7 +27,7 @@ public class User {
         this.role = UserType.ROLE_NONTRIAL;
         this.apiCallCount = 0;
         this.apiCallLimit = 1000;
-
+        this.hasUsedTrial = false;
     }
 
     public User(String user, String pass, UserType role) {
@@ -55,6 +56,7 @@ public class User {
         this.role = role;
         this.apiCallCount = apiCallCount;
         this.apiCallLimit = apiCallLimit;
+        this.hasUsedTrial = false;
     }
 
     /**
@@ -73,6 +75,7 @@ public class User {
 
     public void startTrial() {
         this.startTime = System.currentTimeMillis();
+        this.hasUsedTrial = true;
     }
 
     public boolean incrementApICallCount(){
@@ -126,7 +129,7 @@ public class User {
     }
 
     public String toString(){
-        return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword();
+        return "Id: " + getUserId() + " User: " + getUsername() + " Password: " + getPassword() + " Role: " + getRole();
     }
 
     public UserType getRole() {
@@ -153,5 +156,11 @@ public class User {
         this.apiCallLimit = apiCallLimit;
     }
 
+    public boolean getHasUsedTrial() {
+        return hasUsedTrial;
+    }
 
+    public void setHasUsedTrial(boolean hasUsedTrial) {
+        this.hasUsedTrial = hasUsedTrial;
+    }
 }
