@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -66,9 +65,9 @@ public class PageController {
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
+        user.checkTrialEnd();
         model.addAttribute("user", user);
         return "userPage";
-
     }
 
     @GetMapping("/test")

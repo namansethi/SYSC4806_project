@@ -59,17 +59,14 @@ public class User {
     }
 
     /**
-     *
      * @return true if trial did not end, false if trial has ended
      */
-    public boolean checkTrialEnd() {
+    public void checkTrialEnd() {
         // check if trial user and if current day is 30 days ahead of startTime
         long length = System.currentTimeMillis() - this.startTime;
         if(this.role == UserType.ROLE_TRIAL && length >= 2592000000l) { // 30 days = 2592000000 milliseconds
             this.setRole(UserType.ROLE_NONTRIAL);
-            return false;
         }
-        return true;
     }
 
     public boolean incrementApICallCount(){
