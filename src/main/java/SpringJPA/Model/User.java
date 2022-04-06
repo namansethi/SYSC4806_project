@@ -72,6 +72,10 @@ public class User {
         return false;
     }
 
+    public void startTrial() {
+        this.startTime = System.currentTimeMillis();
+    }
+
     public boolean incrementApICallCount(){
         if(this.apiCallCount < this.apiCallLimit){
             this.apiCallCount++;
