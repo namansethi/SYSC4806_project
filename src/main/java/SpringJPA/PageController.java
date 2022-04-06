@@ -58,6 +58,12 @@ public class PageController {
     @GetMapping("/")
     public String landing(Model model, Principal principal) {
         modifyNavBar(model, principal);
+        if(!(principal == null)) {
+            User user = userRepository.findByUsername(principal.getName());
+            user.checkTrialEnd();
+            updateAuthWhenUpgrading(user);
+            userRepository.save(user);
+        }
         return "landing";
     }
 
@@ -72,14 +78,9 @@ public class PageController {
 
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
-        log.info(principal.toString());
-        log.info(principal.getName());
         modifyNavBar(model, principal);
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
-        log.info("User: " + user.toString());
-        user.checkTrialEnd();
-        log.info("User: " + user.toString());
         model.addAttribute("user", user);
         return "userPage";
     }
@@ -135,7 +136,7 @@ public class PageController {
     private void updateAuthWhenUpgrading(User user) {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
         updatedAuthorities.add(authority);
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
@@ -165,11 +166,27 @@ public class PageController {
         return "redirect:/user/admin";
     }
 
-    @PostMapping("user/admin/changeStatus")
-    public String changeStatus(@RequestParam(value = "id") Long id){
+
+
+    @PostMapping("user/admin/changeTrialPeriod")
+    public String changeTrialPeriod(@RequestParam(value = "id") Long id, String startTime){
+        int time = Integer.parseInt(startTime);
         User user = userRepository.findByUserId(id).get(0);
-        if(user.getRole()!=UserType.ROLE_ADMIN){
-            user.setRole(user.getRole() == UserType.ROLE_TRIAL ? UserType.ROLE_PREMIUM : UserType.ROLE_TRIAL);
+        user.changeTrialPeriod(time);
+        userRepository.save(user);
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("user/admin/changeStatusS")
+    public String changeStatusSelect(@RequestParam(value = "id") Long id, String role){
+        User user = userRepository.findByUserId(id).get(0);
+        if(role.equals("Trial")) {
+            user.setRole(UserType.ROLE_TRIAL);
+            user.startTrial();
+        } else if (role.equals("Premium")){
+            user.setRole(UserType.ROLE_PREMIUM);
+        } else {
+            user.setRole(UserType.ROLE_NONTRIAL);
         }
         userRepository.save(user);
         return "redirect:/user/admin";

@@ -63,24 +63,26 @@ public class AdminPageTest {
 
     @Test
     @WithMockUser(username="admin", roles={"ADMIN"})
-    public void testChangeUser() throws Exception{
-        this.mockMvc.perform(post("/user/admin/changeStatus").param("id", "1").with(csrf()));
+    public void testChangeUserRole() throws Exception{
+        this.mockMvc.perform(post("/user/admin/changeStatus").param("id", "1").param("role", "Premium").with(csrf()));
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("PREMIUM")));
+                .andExpect(content().string(containsString("Premium")));
     }
+
+    @Test
+    @WithMockUser(username="admin", roles={"ADMIN"})
+    public void testEditTrialLength() throws Exception{
+        this.mockMvc.perform(post("/user/admin/changeTrialPeriod").param("id", "1").param("startTime", "760").with(csrf()));
+        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("760")));
+    }
+
     @Test
     @WithMockUser(username="admin", roles={"ADMIN"})
     public void testEditApi() throws Exception{
         this.mockMvc.perform(post("/user/admin/editRequests").param("id", "1").param("apiCallLimit", "9175").with(csrf()));
         this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("9175")));
-    }
-    @Test
-    @WithMockUser(username="admin", roles={"ADMIN"})
-    public void testEditEmail() throws Exception{
-        this.mockMvc.perform(post("/user/admin/editEmail").param("id", "1").param("email", "testcase@gmail.com").with(csrf()));
-        this.mockMvc.perform(get("/user/admin")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("testcase@gmail.com")));
     }
 
     @Test

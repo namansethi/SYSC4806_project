@@ -31,7 +31,7 @@
                     <th scope="col"> Role </th>
                     <th scope="col"> API Calls </th>
                     <th scope="col"> Edit API Calls </th>
-                    <th scope="col"> Edit Email </th>
+                    <th scope="col"> Edit Remaining Trial Days </th>
                     <th scope="col"> Swap User Role </th>
                     <th scope="col"> Reset Calls </th>
                 </tr>
@@ -43,24 +43,29 @@
                     <tr th:each="user : ${users}">
                         <td th:text="${user.username}"><span> UserID </span></td>
                         <td th:text="${user.email}"><span> E-mail </span></td>
-                        <td th:text="${user.role}"><span> Role </span></td>
+                        <td th:text="${user.role.getName()}"><span> Role </span></td>
                         <td th:text="${user.apiCallCount} + '/' + ${user.apiCallLimit}"><span> API Calls </span></td>
                         <!--  -->
                         <td>
                             <form method="post"  action="#" th:action="@{/user/admin/editRequests(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
                                 <input th:field="*{apiCallLimit}" type="text"/> <!--th:field="*{}" -->
-                                <input class="admin-button" type="submit" value="Change API calls"/>
+                                <input class="admin-button" type="submit" value="Submit"/>
                             </form>
                         </td>
                         <td>
-                            <form method="post"  action="#" th:action="@{/user/admin/editEmail(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
-                                <input th:field="*{email}" type="text"/> <!--th:field="*{}" -->
-                                <input class="admin-button" type="submit" value="Change Email"/>
+                            <form th:if="${user.role.getName()=='Trial'}" method="post"  action="#" th:action="@{/user/admin/changeTrialPeriod(id=${user.userId})}" th:object="${userApi}"> <!-- changeTrialPeriod -->
+                                <input  type="text" th:field="*{startTime}"/>
+                                <input class="admin-button" type="submit" th:value="'Change from: ' + ${user.getEndTimeInDays()}"/>
                             </form>
                         </td>
-                        <td th:if="${user.role!='ADMIN'}">
-                            <form method="post" action="#" th:action="@{/user/admin/changeStatus(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
-                                <input class="admin-button" type="submit" value="Up/downgrade"/>
+                        <td>
+                            <form th:if="${user.role.getName()!='Admin'}" method="post" action="#" th:action="@{/user/admin/changeStatusS(id=${user.userId})}" th:object="${userApi}"> <!-- action="#" th:action="@{}" th:object="${user}" th:object="${}" method="post" -->
+                                <select name="Role" th:field="*{role}">
+                                    <option value="Trial">Trial</option>
+                                    <option value="NonTrial">NonTrial</option>
+                                    <option value="Premium">Premium</option>
+                                </select>
+                                <input class="admin-button" type="submit" value="Set Role"/>
                             </form>
                             <!--th:field="*{}"<button formmethod="post" formaction="#" th:formaction="@{/user/admin/changeStatus(id=${user.userId})}" th:formobject="${userApi}"> Up/downgrade </button>-->
                         </td>
