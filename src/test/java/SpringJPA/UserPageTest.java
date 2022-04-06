@@ -1,5 +1,7 @@
 package SpringJPA;
 
+import SpringJPA.Model.User;
+import SpringJPA.Model.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,6 +27,9 @@ public class UserPageTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @DirtiesContext
@@ -85,8 +90,10 @@ public class UserPageTest {
     @Test
     @WithMockUser(username="User1")
     @DirtiesContext
-    public void HiddenUserStartTimeAccessible() throws Exception{
+    public void buttonDisableAfterTrial() throws Exception{
+        User loadedUser = userRepository.findByUsername("User1");
+        loadedUser.setStartTime(System.currentTimeMillis() - 2592000001l);
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Time:")));
+                .andExpect(content().string(containsString("Trial Ended")));
     }
 }
