@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/userpage.css">
+
     <script src="../js/userPage.js"></script>
 </head>
 <body>
@@ -41,7 +42,7 @@
                 <tr>
                     <td  th:text="${user.userId}"><span> ID </span></td>
                     <td  th:text="${user.username}"><span> Username </span></td>
-                    <td  th:text="${user.role}"><span> Role </span></td>
+                    <td  id="role" th:text="${user.role}"><span> Role </span></td>
                     <td  th:text="${user.getEndTimeInDays()}"><span> Trial Days Left </span></td>
                     <td  id="count" th:text="${user.apiCallCount}"><span> Call Count </span></td>
                     <td  id="limit" th:text="${user.apiCallLimit}"><span> Call Limit </span></td>
@@ -53,6 +54,11 @@
                 <input class="btn btn-primary btn-lg" type="submit" id="apibutton" value="Call API">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
+            </form>
+            <div class="spacer"></div>
+            <form th:action="@{/user/endSub}" method="post">
+                <input class="btn btn-primary btn-lg" type="submit" id="endSubscription" value="End Subscription">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </section>
     </div>
