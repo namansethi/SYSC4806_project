@@ -2,6 +2,7 @@ package SpringJPA;
 
 import SpringJPA.Model.User;
 import SpringJPA.Model.UserRepository;
+import SpringJPA.Model.UserType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -136,5 +139,35 @@ public class UserPageTest {
         this.userRepository.save(loadedUser);
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(String.valueOf(trialDuration-daysFromTrialStart-1))));
+    }
+
+
+    @Test
+    @WithMockUser(username="User3")
+    @DirtiesContext
+    public void testPageForbiddenAfterEndButton() throws Exception{
+        this.mockMvc.perform(post("/user/endSub").with(csrf()));
+        this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username="User3")
+    @DirtiesContext
+    public void resetAPICallsAfterEndButton() throws Exception{
+        User user = userRepository.findByUsername("User3");
+        this.mockMvc.perform(post("/user/endSub").with(csrf()));
+        userRepository.save(user);
+        assertEquals(user.getApiCallCount(), 0);
+    }
+
+
+    @Test
+    @WithMockUser(username="User3")
+    @DirtiesContext
+    public void nonTrialUserAfterEndButton() throws Exception{
+        this.mockMvc.perform(post("/user/endSub").with(csrf()));
+        User user = userRepository.findByUsername("User3");
+        userRepository.save(user);
+        assertEquals(UserType.ROLE_NONTRIAL, user.getRole());
     }
 }

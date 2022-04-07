@@ -57,7 +57,7 @@
             </form>
             <div class="spacer"></div>
             <form th:action="@{/user/endSub}" method="post">
-                <input class="btn btn-primary btn-lg" type="submit" id="endSubscription" value="End Subscription">
+                <input class="btn btn-primary btn-lg" type="submit" id="endSubscription" value="">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </section>
