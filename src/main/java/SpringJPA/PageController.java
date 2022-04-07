@@ -82,6 +82,11 @@ public class PageController {
         String name = principal.getName();
         User user = userRepository.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
+        if (user.getRole() != UserType.ROLE_TRIAL) {
+            model.addAttribute("trialStyle", "display: none;");
+        }
+
         return "userPage";
     }
 
