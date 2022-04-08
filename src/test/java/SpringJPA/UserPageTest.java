@@ -150,16 +150,6 @@ public class UserPageTest {
         this.mockMvc.perform(get("/user")).andDo(print()).andExpect(status().isForbidden());
     }
 
-    @Test
-    @WithMockUser(username="User3")
-    @DirtiesContext
-    public void resetAPICallsAfterEndButton() throws Exception{
-        User user = userRepository.findByUsername("User3");
-        this.mockMvc.perform(post("/user/endSub").with(csrf()));
-        userRepository.save(user);
-        assertEquals(user.getApiCallCount(), 0);
-    }
-
 
     @Test
     @WithMockUser(username="User3")

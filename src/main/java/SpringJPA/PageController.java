@@ -119,7 +119,6 @@ public class PageController {
     public String endSub(Principal principal, @ModelAttribute String placeholder){
         User user = userRepository.findByUsername(principal.getName());
         user.setRole(UserType.ROLE_NONTRIAL);
-        user.setApiCallCount(0);
         userRepository.save(user);
         return "redirect:/";
     }
