@@ -43,9 +43,12 @@ Currently, The general structure of the project is as follows.
                     Customer.java - (Represents the customer for the system.) (Depricated, will be removed)
                     User.java - (The base user class which was extended by Administrator and Customer. Now it is the primary user class)
                     UserRepository.java - (The repository that stores User objects)
+                    UserType.java - (An enum of the various user types)
                 CredentialService.java - (Loads user credentials from UserRepository)
+                ExceptionController.java - (Determines the error type)
                 MvcConfig.java - (Adds views to the ViewControllerRegistry)
                 PageController.java - (Manages the pages and templates)
+                Scheduler.java - (Resets Api call counts at the scheduled time (midnight each day))
                 UserController.java - (Defines the REST calls for user objects)
                 UserCredentials.java - (Wraps the user object to ensure safe credential access)
                 WebSecurityConfig.java - (Configures security for Users)
@@ -59,19 +62,30 @@ Currently, The general structure of the project is as follows.
                     landing.html
                     pricing.html
                     register.html
-                static/css
-                    landing.css
-                    login.css
-                    pricing.css
+                static
+                    css
+                        admin.css
+                        error.css
+                        landing.css
+                        register.css
+                        pricing.css
+                    js
+                        userPage.js
                 templates
+                    error.html
+                    error-403.html
+                    error-404.html
                     layout.html
                 application.properties
         test
             java.SpringJPA
                 AdminPageTest
+                ErrorPageTest
                 LandingPageTest
                 PricingPageTest
                 RegisterPageTest
+                SchedulerTest
+                TrialPeriodEndTest
                 UserPageTest
                 UserTest
 
@@ -119,12 +133,16 @@ For milestone 3, the functionality as specified from the project rules is:
 >implemented within the given timeline and makes the product usable and useful. The user interface should not have any 
 >dangling links to non-implemented features.
 
-For milestone 3, we want to wrap up a few remaining tasks such as the implementation of a message when exceeding number
-of trial calls, and finishing the admin and user role security. Additionally, for milestone 3 we want to add the 
-constraints that can be added to the user by the admin. Additionally, we also want to add a trial duration so that 
-free members can only use the trial account for a specified time limit. Finally, we want to resolve any remaining bugs 
-and/or deficiencies in the functionality that may exist in our program. A list of specific issues can be found in the 
-issues tab of this GitHub.
-
+For milestone 3, we have reached our feature inclusion goal for the scope of this project.
+Features added in this version include:
+- Allow users to start a free trial
+- Displaying remaining duration of a user's trial
+- Have a user's trial end after 30 days automatically
+- Allow users to start a premium subscription (note that we do not require payment information as we do not actually wish to collect it)
+- Allow users to cancel their premium subscription
+- Allow admins to alter the duration of a user's trial
+- Prevent users who are not trial or paid users from accessing the api call button
+- Added a custom error page 
+- Allow the admin to access the admin page from the GUI, rather than having to type a URL
 
 
