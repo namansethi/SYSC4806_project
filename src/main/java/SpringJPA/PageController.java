@@ -115,6 +115,14 @@ public class PageController {
         return "redirect:/user";
     }
 
+    @PostMapping("/user/endSub")
+    public String endSub(Principal principal, @ModelAttribute String placeholder){
+        User user = userRepository.findByUsername(principal.getName());
+        user.setRole(UserType.ROLE_NONTRIAL);
+        userRepository.save(user);
+        return "redirect:/";
+    }
+
     @PostMapping("/user/FreeTrialRequest")
     public String makeFreeTrialRequest(Principal principal, @ModelAttribute String placeholder){
         User user = userRepository.findByUsername(principal.getName());

@@ -1,5 +1,12 @@
 window.onload = function() {
     document.getElementById("apibutton").addEventListener("click", alertAPILimit);
+    if(document.getElementById("role").innerText == "ROLE_PREMIUM") {
+        document.getElementById("endSubscription").style.display = "block";
+        document.getElementById("endSubscription").setAttribute("value", "End Subscription");
+    }
+    else{
+        document.getElementById("endSubscription").style.display = "none";
+    }
 }
 
 function alertAPILimit() {
